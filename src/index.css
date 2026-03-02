@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+@theme {
+    --breakpoint-3xl: 1920px;
+    --breakpoint-4xl: 2560px;
+
+    --spacing-sidebar: 260px;
+    --spacing-sidebar-collapsed: 80px;
+}
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    @apply bg-neutral-50 text-neutral-900;
+}
