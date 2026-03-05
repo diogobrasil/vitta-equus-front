@@ -144,6 +144,7 @@ export default function Plantel() {
                 </div>
                 <button
                     type="button"
+                    onClick={() => navigate('/plantel/novo')}
                     className="inline-flex items-center gap-2 rounded-lg bg-brand-blue px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-blue/90 active:scale-[0.98]"
                 >
                     <Plus className="h-4 w-4" />

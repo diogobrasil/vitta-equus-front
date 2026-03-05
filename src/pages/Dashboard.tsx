@@ -121,6 +121,7 @@ const QUICK_ACTIONS: QuickAction[] = [
         icon: <PlusSquare className="h-5 w-5 text-brand-blue" />,
         title: "Cadastrar Equino",
         subtitle: "Adicionar novo animal no haras",
+        route: "/plantel/novo",
     },
 ];
 
