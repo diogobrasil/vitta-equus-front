@@ -10,6 +10,7 @@ import {
     Palette,
     MapPin,
     Plus,
+    HeartHandshake,
 } from "lucide-react";
 
 /* ─────────────────────── Tipos ─────────────────────── */
@@ -221,6 +222,14 @@ export default function PerfilAnimal() {
                         >
                             <Plus className="h-4 w-4" />
                             Novo Prontuário
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() => navigate('/reproducao/nova-cobertura')}
+                            className="inline-flex items-center gap-2 rounded-lg border border-brand-blue bg-white px-5 py-2.5 text-sm font-semibold text-brand-blue shadow-sm transition hover:bg-neutral-50 active:scale-[0.98]"
+                        >
+                            <HeartHandshake className="h-4 w-4" />
+                            Registrar Cobertura
                         </button>
                     </div>
 

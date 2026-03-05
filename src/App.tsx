@@ -5,6 +5,7 @@ import Dashboard from "./pages/Dashboard";
 import Plantel from "./pages/Plantel";
 import PerfilAnimal from "./pages/PerfilAnimal";
 import NovoExameReprodutivo from "./pages/NovoExameReprodutivo";
+import NovaCobertura from "./pages/NovaCobertura";
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
 
           <Route path="/plantel/:id" element={<PerfilAnimal />} />
           <Route path="/reproducao/novo-exame" element={<NovoExameReprodutivo />} />
+          <Route path="/reproducao/nova-cobertura" element={<NovaCobertura />} />
         </Route>
 
         <Route path="*" element={<Navigate to="/login" replace />} />
