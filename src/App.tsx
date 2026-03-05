@@ -8,6 +8,7 @@ import NovoExameReprodutivo from "./pages/NovoExameReprodutivo";
 import NovaCobertura from "./pages/NovaCobertura";
 import DiagnosticoGestacao from "./pages/DiagnosticoGestacao";
 import RegistroParto from "./pages/RegistroParto";
+import CentralReproducao from "./pages/CentralReproducao";
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
         <Route element={<MainLayout />}>
           <Route index element={<Dashboard />} />
           <Route path="/plantel" element={<Plantel />} />
+          <Route path="/reproducao" element={<CentralReproducao />} />
 
           <Route path="/plantel/:id" element={<PerfilAnimal />} />
           <Route path="/reproducao/novo-exame" element={<NovoExameReprodutivo />} />
