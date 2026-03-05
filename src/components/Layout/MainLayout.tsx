@@ -31,7 +31,7 @@ const NAV_ITEMS: NavItem[] = [
         icon: <Stethoscope className="h-5 w-5" />,
     },
     {
-        to: "/estoque",
+        to: "/farmacia",
         label: "Estoque Farmácia",
         icon: <Package className="h-5 w-5" />,
     },

@@ -11,6 +11,8 @@ import RegistroParto from "./pages/RegistroParto";
 import CentralReproducao from "./pages/CentralReproducao";
 import ProntuariosClinicos from "./pages/ProntuariosClinicos";
 import NovoProntuario from "./pages/NovoProntuario";
+import EstoqueFarmacia from "./pages/EstoqueFarmacia";
+import NovoInsumo from "./pages/NovoInsumo";
 
 export default function App() {
   return (
@@ -24,6 +26,8 @@ export default function App() {
           <Route path="/reproducao" element={<CentralReproducao />} />
           <Route path="/clinico" element={<ProntuariosClinicos />} />
           <Route path="/clinico/novo" element={<NovoProntuario />} />
+          <Route path="/farmacia" element={<EstoqueFarmacia />} />
+          <Route path="/farmacia/novo" element={<NovoInsumo />} />
 
           <Route path="/plantel/:id" element={<PerfilAnimal />} />
           <Route path="/reproducao/novo-exame" element={<NovoExameReprodutivo />} />
