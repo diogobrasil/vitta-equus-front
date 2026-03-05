@@ -11,6 +11,7 @@ import {
     MapPin,
     Plus,
     HeartHandshake,
+    Activity,
 } from "lucide-react";
 
 /* ─────────────────────── Tipos ─────────────────────── */
@@ -238,6 +239,14 @@ export default function PerfilAnimal() {
                         >
                             <Baby className="h-4 w-4" />
                             Diagnóstico de Gestação
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() => navigate('/reproducao/parto')}
+                            className="inline-flex items-center gap-2 rounded-lg border border-purple-700 bg-white px-5 py-2.5 text-sm font-semibold text-purple-700 shadow-sm transition hover:bg-purple-50 active:scale-[0.98]"
+                        >
+                            <Activity className="h-4 w-4" />
+                            Registrar Parto
                         </button>
                     </div>
 
