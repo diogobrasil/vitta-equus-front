@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Search, Plus, Eye, Edit } from "lucide-react";
 
 /* ─────────────────────── Tipos ─────────────────────── */
@@ -96,6 +97,7 @@ const AVATAR_COLORS = [
 /* ─────────────────────── Componente ─────────────────────── */
 
 export default function ProntuariosClinicos() {
+    const navigate = useNavigate();
     const [busca, setBusca] = useState("");
     const [filtroStatus, setFiltroStatus] = useState("Todos");
     const [filtroPeriodo, setFiltroPeriodo] = useState("Todos");
@@ -134,6 +136,7 @@ export default function ProntuariosClinicos() {
                 </div>
                 <button
                     type="button"
+                    onClick={() => navigate('/clinico/novo')}
                     className="inline-flex items-center gap-2 rounded-lg bg-brand-blue px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-blue/90 active:scale-[0.98]"
                 >
                     <Plus className="h-4 w-4" />

@@ -28,6 +28,7 @@ interface QuickAction {
     icon: React.ReactNode;
     title: string;
     subtitle: string;
+    route?: string;
 }
 
 interface Reminder {
@@ -114,6 +115,7 @@ const QUICK_ACTIONS: QuickAction[] = [
         icon: <Syringe className="h-5 w-5 text-brand-blue" />,
         title: "Aplicar Medicação",
         subtitle: "Registrar tratamento em curso",
+        route: "/clinico/novo",
     },
     {
         icon: <PlusSquare className="h-5 w-5 text-brand-blue" />,
@@ -276,6 +278,7 @@ export default function Dashboard() {
                                 <button
                                     key={a.title}
                                     type="button"
+                                    onClick={() => a.route && navigate(a.route)}
                                     className="flex w-full items-center gap-4 px-6 py-4 text-left transition-colors hover:bg-neutral-50"
                                 >
                                     <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-brand-green/20">

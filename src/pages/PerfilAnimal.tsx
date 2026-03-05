@@ -219,6 +219,7 @@ export default function PerfilAnimal() {
                         </button>
                         <button
                             type="button"
+                            onClick={() => navigate('/clinico/novo')}
                             className="inline-flex items-center gap-2 rounded-lg bg-brand-green px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-green/90 active:scale-[0.98]"
                         >
                             <Plus className="h-4 w-4" />
