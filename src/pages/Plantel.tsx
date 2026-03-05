@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Search, Eye, Edit, Plus, Mars, Venus } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 /* ─────────────────────── Tipos ─────────────────────── */
 
@@ -112,6 +113,7 @@ export default function Plantel() {
     const [busca, setBusca] = useState("");
     const [filtroCategoria, setFiltroCategoria] = useState("Todos");
     const [filtroStatus, setFiltroStatus] = useState("Todos");
+    const navigate = useNavigate();
 
     const animaisFiltrados = MOCK_ANIMAIS.filter((a) => {
         const matchBusca =
@@ -260,6 +262,7 @@ export default function Plantel() {
                                 <td className="px-6 py-4">
                                     <div className="flex items-center justify-end gap-1">
                                         <button
+                                            onClick={() => navigate(`/plantel/${animal.id}`)}
                                             type="button"
                                             aria-label="Ver perfil"
                                             title="Ver Perfil"

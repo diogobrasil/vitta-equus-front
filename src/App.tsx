@@ -4,26 +4,24 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Plantel from "./pages/Plantel";
 import PerfilAnimal from "./pages/PerfilAnimal";
+import NovoExameReprodutivo from "./pages/NovoExameReprodutivo";
 
-function App() {
+export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Rotas públicas — fora do MainLayout */}
         <Route path="/login" element={<Login />} />
 
-        {/* Rotas protegidas — envolvidas pelo MainLayout */}
-        <Route path="/" element={<MainLayout />}>
+        <Route element={<MainLayout />}>
           <Route index element={<Dashboard />} />
-          <Route path="plantel" element={<Plantel />} />
-          <Route path="animal/:id" element={<PerfilAnimal />} />
+          <Route path="/plantel" element={<Plantel />} />
+
+          <Route path="/plantel/:id" element={<PerfilAnimal />} />
+          <Route path="/reproducao/novo-exame" element={<NovoExameReprodutivo />} />
         </Route>
 
-        {/* Fallback: redireciona qualquer rota desconhecida para o Login */}
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </BrowserRouter>
   );
 }
-
-export default App;

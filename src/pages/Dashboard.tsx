@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import {
     Plus,
     Activity,
@@ -150,6 +151,8 @@ const STATUS_STYLES: Record<Exam["status"], string> = {
 /* ─────────────────────── Componente ─────────────────────── */
 
 export default function Dashboard() {
+    const navigate = useNavigate();
+
     return (
         <div className="space-y-8">
             {/* ── Cabeçalho da página ── */}
@@ -164,6 +167,7 @@ export default function Dashboard() {
                 </div>
                 <button
                     type="button"
+                    onClick={() => navigate('/reproducao/novo-exame')}
                     className="inline-flex items-center gap-2 rounded-lg bg-brand-blue px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-blue/90 active:scale-[0.98]"
                 >
                     <Plus className="h-4 w-4" />
