@@ -231,6 +231,14 @@ export default function PerfilAnimal() {
                             <HeartHandshake className="h-4 w-4" />
                             Registrar Cobertura
                         </button>
+                        <button
+                            type="button"
+                            onClick={() => navigate('/reproducao/diagnostico')}
+                            className="inline-flex items-center gap-2 rounded-lg border border-brand-green bg-white px-5 py-2.5 text-sm font-semibold text-brand-green shadow-sm transition hover:bg-green-50 active:scale-[0.98]"
+                        >
+                            <Baby className="h-4 w-4" />
+                            Diagnóstico de Gestação
+                        </button>
                     </div>
 
                     {/* Título */}
