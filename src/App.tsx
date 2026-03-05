@@ -15,6 +15,7 @@ import EstoqueFarmacia from "./pages/EstoqueFarmacia";
 import NovoInsumo from "./pages/NovoInsumo";
 import CadastrosGerais from "./pages/CadastrosGerais";
 import NovoAnimal from "./pages/NovoAnimal";
+import EditarAnimal from "./pages/EditarAnimal";
 
 export default function App() {
   return (
@@ -34,6 +35,7 @@ export default function App() {
           <Route path="/plantel/novo" element={<NovoAnimal />} />
 
           <Route path="/plantel/:id" element={<PerfilAnimal />} />
+          <Route path="/plantel/editar/:id" element={<EditarAnimal />} />
           <Route path="/reproducao/novo-exame" element={<NovoExameReprodutivo />} />
           <Route path="/reproducao/nova-cobertura" element={<NovaCobertura />} />
           <Route path="/reproducao/diagnostico" element={<DiagnosticoGestacao />} />

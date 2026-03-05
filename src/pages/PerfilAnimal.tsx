@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
     ArrowLeft,
     Edit,
@@ -123,6 +123,7 @@ const EVENT_STYLE: Record<
 
 export default function PerfilAnimal() {
     const navigate = useNavigate();
+    const { id } = useParams();
 
     return (
         <div className="space-y-6">
@@ -196,6 +197,7 @@ export default function PerfilAnimal() {
                         <div className="p-6">
                             <button
                                 type="button"
+                                onClick={() => navigate(`/plantel/editar/${id}`)}
                                 className="flex w-full items-center justify-center gap-2 rounded-lg border-2 border-brand-blue px-4 py-2.5 text-sm font-semibold text-brand-blue transition-colors hover:bg-brand-blue hover:text-white active:scale-[0.98]"
                             >
                                 <Edit className="h-4 w-4" />

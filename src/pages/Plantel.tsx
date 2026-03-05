@@ -273,6 +273,7 @@ export default function Plantel() {
                                         </button>
                                         <button
                                             type="button"
+                                            onClick={() => navigate(`/plantel/editar/${animal.id}`)}
                                             aria-label="Editar"
                                             title="Editar"
                                             className="rounded-lg p-2 text-neutral-400 transition-colors hover:bg-neutral-100 hover:text-brand-blue"
