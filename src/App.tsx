@@ -9,6 +9,7 @@ import NovaCobertura from "./pages/NovaCobertura";
 import DiagnosticoGestacao from "./pages/DiagnosticoGestacao";
 import RegistroParto from "./pages/RegistroParto";
 import CentralReproducao from "./pages/CentralReproducao";
+import ProntuariosClinicos from "./pages/ProntuariosClinicos";
 
 export default function App() {
   return (
@@ -20,6 +21,7 @@ export default function App() {
           <Route index element={<Dashboard />} />
           <Route path="/plantel" element={<Plantel />} />
           <Route path="/reproducao" element={<CentralReproducao />} />
+          <Route path="/clinico" element={<ProntuariosClinicos />} />
 
           <Route path="/plantel/:id" element={<PerfilAnimal />} />
           <Route path="/reproducao/novo-exame" element={<NovoExameReprodutivo />} />
