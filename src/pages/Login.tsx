@@ -19,7 +19,7 @@ export default function Login() {
                 <div className="w-full max-w-md space-y-8">
                     {/* Branding */}
                     <div className="flex items-center gap-2">
-                        <HeartPulse className="h-8 w-8 text-teal-600" strokeWidth={2.2} />
+                        <HeartPulse className="h-8 w-8 text-brand-blue" strokeWidth={2.2} />
                         <span className="text-xl font-bold text-neutral-800 tracking-tight">
                             Vitta Equus
                         </span>
@@ -50,7 +50,7 @@ export default function Login() {
                                 type="email"
                                 placeholder="seu@email.com"
                                 autoComplete="email"
-                                className="block w-full rounded-lg border border-neutral-300 bg-neutral-50 px-4 py-2.5 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none transition focus:border-teal-500 focus:ring-2 focus:ring-teal-500/30"
+                                className="block w-full rounded-lg border border-neutral-300 bg-neutral-50 px-4 py-2.5 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none transition focus:border-brand-green focus:ring-2 focus:ring-brand-green/30"
                             />
                         </div>
 
@@ -68,7 +68,7 @@ export default function Login() {
                                     type={showPassword ? "text" : "password"}
                                     placeholder="••••••••"
                                     autoComplete="current-password"
-                                    className="block w-full rounded-lg border border-neutral-300 bg-neutral-50 px-4 py-2.5 pr-11 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none transition focus:border-teal-500 focus:ring-2 focus:ring-teal-500/30"
+                                    className="block w-full rounded-lg border border-neutral-300 bg-neutral-50 px-4 py-2.5 pr-11 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none transition focus:border-brand-green focus:ring-2 focus:ring-brand-green/30"
                                 />
                                 <button
                                     type="button"
@@ -90,13 +90,13 @@ export default function Login() {
                             <label className="flex items-center gap-2 cursor-pointer select-none">
                                 <input
                                     type="checkbox"
-                                    className="h-4 w-4 rounded border-neutral-300 text-teal-600 focus:ring-teal-500 accent-teal-600"
+                                    className="h-4 w-4 rounded border-neutral-300 text-brand-green focus:ring-brand-green accent-brand-green"
                                 />
                                 <span className="text-neutral-600">Lembrar de mim</span>
                             </label>
                             <a
                                 href="#"
-                                className="font-medium text-teal-600 hover:text-teal-700 transition-colors"
+                                className="font-medium text-brand-blue hover:text-brand-blue/80 transition-colors"
                             >
                                 Esqueceu a senha?
                             </a>
@@ -105,7 +105,7 @@ export default function Login() {
                         {/* Botão */}
                         <button
                             type="submit"
-                            className="w-full rounded-lg bg-teal-600 px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-teal-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600 active:scale-[0.98]"
+                            className="w-full rounded-lg bg-brand-blue px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-blue/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue active:scale-[0.98]"
                         >
                             Entrar no sistema
                         </button>
@@ -116,7 +116,7 @@ export default function Login() {
                         Não tem uma conta?{" "}
                         <a
                             href="#"
-                            className="font-medium text-teal-600 hover:text-teal-700 transition-colors"
+                            className="font-medium text-brand-blue hover:text-brand-blue/80 transition-colors"
                         >
                             Fale com o administrador
                         </a>

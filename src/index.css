@@ -6,6 +6,9 @@
 
     --spacing-sidebar: 260px;
     --spacing-sidebar-collapsed: 80px;
+
+    --color-brand-blue: #1c3058;
+    --color-brand-green: #9bc483;
 }
 
 html,

@@ -59,8 +59,8 @@ const STATS = [
     {
         label: "Total de Equinos",
         value: 45,
-        icon: <Hash className="h-5 w-5 text-teal-700" />,
-        bg: "bg-teal-100",
+        icon: <Hash className="h-5 w-5 text-brand-blue" />,
+        bg: "bg-brand-green/20",
     },
 ];
 
@@ -105,17 +105,17 @@ const EXAMS: Exam[] = [
 
 const QUICK_ACTIONS: QuickAction[] = [
     {
-        icon: <ClipboardList className="h-5 w-5 text-teal-600" />,
+        icon: <ClipboardList className="h-5 w-5 text-brand-blue" />,
         title: "Lançar Exame Diário",
         subtitle: "Registrar sinais vitais de rotina",
     },
     {
-        icon: <Syringe className="h-5 w-5 text-teal-600" />,
+        icon: <Syringe className="h-5 w-5 text-brand-blue" />,
         title: "Aplicar Medicação",
         subtitle: "Registrar tratamento em curso",
     },
     {
-        icon: <PlusSquare className="h-5 w-5 text-teal-600" />,
+        icon: <PlusSquare className="h-5 w-5 text-brand-blue" />,
         title: "Cadastrar Equino",
         subtitle: "Adicionar novo animal no haras",
     },
@@ -128,7 +128,7 @@ const REMINDERS: Reminder[] = [
         time: "Hoje, 14:00",
     },
     {
-        color: "bg-teal-500",
+        color: "bg-brand-green",
         text: "Vacinação - Lote B (12 equinos)",
         time: "Hoje, 16:30",
     },
@@ -164,7 +164,7 @@ export default function Dashboard() {
                 </div>
                 <button
                     type="button"
-                    className="inline-flex items-center gap-2 rounded-lg bg-teal-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-teal-700 active:scale-[0.98]"
+                    className="inline-flex items-center gap-2 rounded-lg bg-brand-blue px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-blue/90 active:scale-[0.98]"
                 >
                     <Plus className="h-4 w-4" />
                     Novo Exame Diário
@@ -201,7 +201,7 @@ export default function Dashboard() {
                         </h2>
                         <button
                             type="button"
-                            className="text-sm font-medium text-teal-600 hover:text-teal-700 transition-colors"
+                            className="text-sm font-medium text-brand-blue hover:text-brand-blue/80 transition-colors"
                         >
                             Ver todos
                         </button>
@@ -224,7 +224,7 @@ export default function Dashboard() {
                         >
                             {/* Cavalo */}
                             <div className="flex items-center gap-3">
-                                <div className="h-9 w-9 shrink-0 rounded-full bg-teal-600 flex items-center justify-center text-xs font-bold text-white select-none">
+                                <div className="h-9 w-9 shrink-0 rounded-full bg-brand-blue flex items-center justify-center text-xs font-bold text-white select-none">
                                     {e.avatar}
                                 </div>
                                 <div>
@@ -274,7 +274,7 @@ export default function Dashboard() {
                                     type="button"
                                     className="flex w-full items-center gap-4 px-6 py-4 text-left transition-colors hover:bg-neutral-50"
                                 >
-                                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-teal-50">
+                                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-brand-green/20">
                                         {a.icon}
                                     </div>
                                     <div className="flex-1 min-w-0">

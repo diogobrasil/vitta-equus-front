@@ -54,15 +54,15 @@ export default function MainLayout() {
             <aside
                 className={`
           fixed inset-y-0 left-0 z-40 flex w-sidebar flex-col
-          bg-[#eef6f3] transition-transform duration-200
+          bg-brand-blue transition-transform duration-200
           ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
           md:translate-x-0 md:static md:z-auto
         `}
             >
                 {/* Logo */}
                 <div className="flex items-center gap-2.5 px-6 py-5">
-                    <HeartPulse className="h-7 w-7 text-teal-600" strokeWidth={2.4} />
-                    <span className="text-lg font-bold tracking-tight text-neutral-800">
+                    <HeartPulse className="h-7 w-7 text-brand-green" strokeWidth={2.4} />
+                    <span className="text-lg font-bold tracking-tight text-white">
                         Vitta Equus
                     </span>
                 </div>
@@ -77,8 +77,8 @@ export default function MainLayout() {
                             onClick={() => setSidebarOpen(false)}
                             className={({ isActive }) =>
                                 `flex items-center gap-3 rounded-lg px-4 py-2.5 text-sm font-medium transition-colors ${isActive
-                                    ? "bg-teal-600 text-white shadow-sm"
-                                    : "text-neutral-600 hover:bg-teal-50 hover:text-teal-700"
+                                    ? "bg-brand-green text-brand-blue shadow-sm font-bold"
+                                    : "text-white/70 hover:bg-white/10 hover:text-white"
                                 }`
                             }
                         >
@@ -121,7 +121,7 @@ export default function MainLayout() {
                         <input
                             type="text"
                             placeholder="Buscar cavalo, prontuário..."
-                            className="w-full rounded-lg border border-neutral-200 bg-neutral-50 py-2 pl-10 pr-4 text-sm text-neutral-700 placeholder:text-neutral-400 outline-none transition focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20"
+                            className="w-full rounded-lg border border-neutral-200 bg-neutral-50 py-2 pl-10 pr-4 text-sm text-neutral-700 placeholder:text-neutral-400 outline-none transition focus:border-brand-green focus:ring-2 focus:ring-brand-green/20"
                         />
                     </div>
 
@@ -139,7 +139,7 @@ export default function MainLayout() {
                         </button>
 
                         <div className="flex items-center gap-3">
-                            <div className="h-9 w-9 rounded-full bg-teal-600 flex items-center justify-center text-sm font-bold text-white select-none">
+                            <div className="h-9 w-9 rounded-full bg-brand-blue flex items-center justify-center text-sm font-bold text-white select-none">
                                 DC
                             </div>
                             <div className="hidden sm:block leading-tight">
