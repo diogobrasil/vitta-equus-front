@@ -8,6 +8,7 @@ import {
     Package,
     Search,
     Bell,
+    Database,
 } from "lucide-react";
 
 /* ─── Itens do menu lateral ─── */
@@ -34,6 +35,11 @@ const NAV_ITEMS: NavItem[] = [
         to: "/farmacia",
         label: "Estoque Farmácia",
         icon: <Package className="h-5 w-5" />,
+    },
+    {
+        to: "/cadastros",
+        label: "Cadastros",
+        icon: <Database className="h-5 w-5" />,
     },
 ];
 

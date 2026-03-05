@@ -13,6 +13,7 @@ import ProntuariosClinicos from "./pages/ProntuariosClinicos";
 import NovoProntuario from "./pages/NovoProntuario";
 import EstoqueFarmacia from "./pages/EstoqueFarmacia";
 import NovoInsumo from "./pages/NovoInsumo";
+import CadastrosGerais from "./pages/CadastrosGerais";
 
 export default function App() {
   return (
@@ -28,6 +29,7 @@ export default function App() {
           <Route path="/clinico/novo" element={<NovoProntuario />} />
           <Route path="/farmacia" element={<EstoqueFarmacia />} />
           <Route path="/farmacia/novo" element={<NovoInsumo />} />
+          <Route path="/cadastros" element={<CadastrosGerais />} />
 
           <Route path="/plantel/:id" element={<PerfilAnimal />} />
           <Route path="/reproducao/novo-exame" element={<NovoExameReprodutivo />} />
