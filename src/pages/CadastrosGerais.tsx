@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Users, MapPin, Truck, Edit, Trash2, Plus } from "lucide-react";
 
 /* ─────────────────────── Tipos ─────────────────────── */
@@ -105,9 +106,19 @@ const TABS: { key: TabKey; label: string; icon: React.ReactNode; btnLabel: strin
 /* ─────────────────────── Componente ─────────────────────── */
 
 export default function CadastrosGerais() {
+    const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState<TabKey>("proprietarios");
 
     const currentTab = TABS.find((t) => t.key === activeTab)!;
+
+    const handleNovoCadastro = () => {
+        const routes: Record<TabKey, string> = {
+            proprietarios: "/cadastros/proprietario/novo",
+            propriedades: "/cadastros/propriedade/nova",
+            fornecedores: "/cadastros/fornecedor/novo",
+        };
+        navigate(routes[activeTab]);
+    };
 
     return (
         <div className="rounded-xl border border-neutral-200 bg-white shadow-sm">
@@ -124,6 +135,7 @@ export default function CadastrosGerais() {
                 </div>
                 <button
                     type="button"
+                    onClick={handleNovoCadastro}
                     className="inline-flex items-center gap-2 rounded-lg bg-brand-blue px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-blue/90 active:scale-[0.98]"
                 >
                     <Plus className="h-4 w-4" />
@@ -141,8 +153,8 @@ export default function CadastrosGerais() {
                             type="button"
                             onClick={() => setActiveTab(tab.key)}
                             className={`inline-flex items-center gap-2 px-6 py-3.5 text-sm font-semibold transition-colors ${isActive
-                                    ? "border-b-2 border-brand-blue text-brand-blue"
-                                    : "text-gray-500 hover:text-gray-700"
+                                ? "border-b-2 border-brand-blue text-brand-blue"
+                                : "text-gray-500 hover:text-gray-700"
                                 }`}
                         >
                             {tab.icon}
