@@ -21,7 +21,7 @@ export default function Login() {
                     <div className="flex items-center gap-2">
                         <HeartPulse className="h-8 w-8 text-brand-blue" strokeWidth={2.2} />
                         <span className="text-xl font-bold text-neutral-800 tracking-tight">
-                            Vitta Equus
+                            VitaEquus
                         </span>
                     </div>
 

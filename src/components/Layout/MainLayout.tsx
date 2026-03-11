@@ -69,7 +69,7 @@ export default function MainLayout() {
                 <div className="flex items-center gap-2.5 px-6 py-5">
                     <HeartPulse className="h-7 w-7 text-brand-green" strokeWidth={2.4} />
                     <span className="text-lg font-bold tracking-tight text-white">
-                        Vitta Equus
+                        VitaEquus
                     </span>
                 </div>
 
