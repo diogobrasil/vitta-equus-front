@@ -15,6 +15,7 @@ interface AtendimentoSummary {
     veterinario: string;
     queixa: string;
     status: StatusAtendimento;
+    propriedade: string;
 }
 
 /* ─────────────────────── Dados mockados ─────────────────────── */
@@ -29,6 +30,7 @@ const MOCK_ATENDIMENTOS: AtendimentoSummary[] = [
         veterinario: "Dr. Carlos",
         queixa: "Claudicação membro anterior direito",
         status: "em_tratamento",
+        propriedade: "Fazenda Esperança",
     },
     {
         id: 2,
@@ -39,6 +41,7 @@ const MOCK_ATENDIMENTOS: AtendimentoSummary[] = [
         veterinario: "Dra. Marina",
         queixa: "Cólica leve",
         status: "alta",
+        propriedade: "Haras Boa VistaLTDA",
     },
     {
         id: 3,
@@ -49,6 +52,7 @@ const MOCK_ATENDIMENTOS: AtendimentoSummary[] = [
         veterinario: "Dr. Carlos",
         queixa: "Vacinação de rotina",
         status: "alta",
+        propriedade: "Fazenda Esperança",
     },
     {
         id: 4,
@@ -59,6 +63,7 @@ const MOCK_ATENDIMENTOS: AtendimentoSummary[] = [
         veterinario: "Dr. Carlos",
         queixa: "Síndrome cólica grave — encaminhado para cirurgia",
         status: "obito",
+        propriedade: "Haras Boa VistaLTDA",
     },
     {
         id: 5,
@@ -69,6 +74,7 @@ const MOCK_ATENDIMENTOS: AtendimentoSummary[] = [
         veterinario: "Dra. Marina",
         queixa: "Ferida lacerante no membro posterior esquerdo",
         status: "em_tratamento",
+        propriedade: "Fazenda Esperança",
     },
 ];
 
@@ -99,6 +105,7 @@ const AVATAR_COLORS = [
 export default function ProntuariosClinicos() {
     const navigate = useNavigate();
     const [busca, setBusca] = useState("");
+    const [propriedadeFiltro, setPropriedadeFiltro] = useState("Todas");
     const [filtroStatus, setFiltroStatus] = useState("Todos");
     const [filtroPeriodo, setFiltroPeriodo] = useState("Todos");
 
@@ -111,11 +118,15 @@ export default function ProntuariosClinicos() {
         const matchStatus =
             filtroStatus === "Todos" ||
             STATUS_LABEL[a.status] === filtroStatus;
+            
+        const matchPropriedade = 
+            propriedadeFiltro === "Todas" || 
+            a.propriedade === propriedadeFiltro;
 
         // Período simplificado (mock — sem lógica real de datas)
         const matchPeriodo = filtroPeriodo !== undefined;
 
-        return matchBusca && matchStatus && matchPeriodo;
+        return matchBusca && matchStatus && matchPeriodo && matchPropriedade;
     });
 
     const inputClass =
@@ -134,14 +145,25 @@ export default function ProntuariosClinicos() {
                         plantel.
                     </p>
                 </div>
-                <button
-                    type="button"
-                    onClick={() => navigate('/clinico/novo')}
-                    className="inline-flex items-center gap-2 rounded-lg bg-brand-blue px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-blue/90 active:scale-[0.98]"
-                >
-                    <Plus className="h-4 w-4" />
-                    Novo Atendimento
-                </button>
+                <div className="flex items-center gap-3">
+                    <select
+                        value={propriedadeFiltro}
+                        onChange={(e) => setPropriedadeFiltro(e.target.value)}
+                        className="rounded-lg border border-neutral-200 bg-white px-4 py-2.5 text-sm font-medium text-neutral-700 shadow-sm outline-none transition focus:border-brand-green focus:ring-2 focus:ring-brand-green/20"
+                    >
+                        <option value="Todas">Todas as Propriedades</option>
+                        <option value="Fazenda Esperança">Fazenda Esperança</option>
+                        <option value="Haras Boa VistaLTDA">Haras Boa Vista</option>
+                    </select>
+                    <button
+                        type="button"
+                        onClick={() => navigate('/clinico/novo')}
+                        className="inline-flex items-center gap-2 rounded-lg bg-brand-blue px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-blue/90 active:scale-[0.98]"
+                    >
+                        <Plus className="h-4 w-4" />
+                        Novo Atendimento
+                    </button>
+                </div>
             </div>
 
             {/* ── Barra de ferramentas ── */}

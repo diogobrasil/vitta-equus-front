@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
     Users,
     TrendingUp,
@@ -31,6 +32,7 @@ interface EguaFunil {
     avatar: string;
     status: StatusReprodutivo;
     detalhe: string;
+    propriedade: string;
 }
 
 interface Alerta {
@@ -41,34 +43,7 @@ interface Alerta {
     descricao: string;
 }
 
-/* ─────────────────────── Dados mockados ─────────────────────── */
-
-const KPIs: KPI[] = [
-    {
-        label: "Matrizes Ativas",
-        value: 32,
-        icon: <Users className="h-5 w-5 text-brand-blue" />,
-        bg: "bg-brand-blue/10",
-    },
-    {
-        label: "Taxa de Prenhez",
-        value: "65%",
-        icon: <TrendingUp className="h-5 w-5 text-brand-green" />,
-        bg: "bg-brand-green/15",
-    },
-    {
-        label: "Coberturas na Estação",
-        value: 45,
-        icon: <HeartHandshake className="h-5 w-5 text-purple-600" />,
-        bg: "bg-purple-100",
-    },
-    {
-        label: "Nascimentos Previstos",
-        value: 12,
-        icon: <Baby className="h-5 w-5 text-orange-600" />,
-        bg: "bg-orange-100",
-    },
-];
+/* ─────────────────────── Constantes ─────────────────────── */
 
 const FUNIL_SECTIONS: {
     titulo: string;
@@ -105,6 +80,7 @@ const EGUAS_FUNIL: EguaFunil[] = [
         avatar: "AU",
         status: "vazia",
         detalhe: "Sem atividade folicular",
+        propriedade: "Fazenda Esperança",
     },
     {
         id: 2,
@@ -113,6 +89,7 @@ const EGUAS_FUNIL: EguaFunil[] = [
         avatar: "SA",
         status: "vazia",
         detalhe: "Aguardando cio",
+        propriedade: "Haras Boa VistaLTDA",
     },
     {
         id: 3,
@@ -121,6 +98,7 @@ const EGUAS_FUNIL: EguaFunil[] = [
         avatar: "PR",
         status: "acompanhamento",
         detalhe: "Folículo 28mm",
+        propriedade: "Fazenda Esperança",
     },
     {
         id: 4,
@@ -129,6 +107,7 @@ const EGUAS_FUNIL: EguaFunil[] = [
         avatar: "ED",
         status: "acompanhamento",
         detalhe: "Folículo 35mm — Edema Grau 2",
+        propriedade: "Haras Boa VistaLTDA",
     },
     {
         id: 5,
@@ -137,6 +116,7 @@ const EGUAS_FUNIL: EguaFunil[] = [
         avatar: "BR",
         status: "acompanhamento",
         detalhe: "Folículo 30mm",
+        propriedade: "Fazenda Esperança",
     },
     {
         id: 6,
@@ -145,6 +125,7 @@ const EGUAS_FUNIL: EguaFunil[] = [
         avatar: "LN",
         status: "aguardando_dg",
         detalhe: "15 dias pós-cobertura",
+        propriedade: "Fazenda Esperança",
     },
     {
         id: 7,
@@ -153,6 +134,7 @@ const EGUAS_FUNIL: EguaFunil[] = [
         avatar: "NI",
         status: "aguardando_dg",
         detalhe: "12 dias pós-cobertura",
+        propriedade: "Haras Boa VistaLTDA",
     },
     {
         id: 8,
@@ -161,6 +143,7 @@ const EGUAS_FUNIL: EguaFunil[] = [
         avatar: "IM",
         status: "prenhe",
         detalhe: "Gestação: 45 dias",
+        propriedade: "Fazenda Esperança",
     },
     {
         id: 9,
@@ -169,6 +152,7 @@ const EGUAS_FUNIL: EguaFunil[] = [
         avatar: "VE",
         status: "prenhe",
         detalhe: "Gestação: 335 dias",
+        propriedade: "Haras Boa VistaLTDA",
     },
     {
         id: 10,
@@ -177,6 +161,7 @@ const EGUAS_FUNIL: EguaFunil[] = [
         avatar: "RA",
         status: "prenhe",
         detalhe: "Gestação: 200 dias",
+        propriedade: "Fazenda Esperança",
     },
     {
         id: 11,
@@ -185,6 +170,7 @@ const EGUAS_FUNIL: EguaFunil[] = [
         avatar: "FC",
         status: "prenhe",
         detalhe: "Gestação: 90 dias",
+        propriedade: "Fazenda Esperança",
     },
 ];
 
@@ -226,6 +212,44 @@ const AVATAR_COLORS = [
 /* ─────────────────────── Componente ─────────────────────── */
 
 export default function CentralReproducao() {
+    const [propriedadeFiltro, setPropriedadeFiltro] = useState<string>("Todas");
+
+    const eguasFiltradas = EGUAS_FUNIL.filter(
+        (egua) => propriedadeFiltro === "Todas" || egua.propriedade === propriedadeFiltro
+    );
+
+    const matrizesAtivasCount = eguasFiltradas.length;
+    const prenhesCount = eguasFiltradas.filter((e) => e.status === "prenhe").length;
+    const taxaPrenhez = matrizesAtivasCount > 0 ? Math.round((prenhesCount / matrizesAtivasCount) * 100) : 0;
+
+    const dynamicKPIs: KPI[] = [
+        {
+            label: "Matrizes Ativas",
+            value: matrizesAtivasCount,
+            icon: <Users className="h-5 w-5 text-brand-blue" />,
+            bg: "bg-brand-blue/10",
+        },
+        {
+            label: "Taxa de Prenhez",
+            value: `${taxaPrenhez}%`,
+            icon: <TrendingUp className="h-5 w-5 text-brand-green" />,
+            bg: "bg-brand-green/15",
+        },
+        {
+            // mantendo fixo para simulação (em prod seria calculado)
+            label: "Coberturas na Estação",
+            value: 45,
+            icon: <HeartHandshake className="h-5 w-5 text-purple-600" />,
+            bg: "bg-purple-100",
+        },
+        {
+            label: "Nascimentos Previstos",
+            value: prenhesCount, 
+            icon: <Baby className="h-5 w-5 text-orange-600" />,
+            bg: "bg-orange-100",
+        },
+    ];
+
     return (
         <div className="space-y-8">
             {/* ── Cabeçalho ── */}
@@ -239,15 +263,26 @@ export default function CentralReproducao() {
                         matrizes.
                     </p>
                 </div>
-                <select className="rounded-lg border border-neutral-200 bg-white px-4 py-2.5 text-sm font-medium text-neutral-700 shadow-sm outline-none transition focus:border-brand-green focus:ring-2 focus:ring-brand-green/20">
-                    <option>Estação 2026/2027</option>
-                    <option>Estação 2025/2026</option>
-                </select>
+                <div className="flex gap-3">
+                    <select 
+                        value={propriedadeFiltro}
+                        onChange={(e) => setPropriedadeFiltro(e.target.value)}
+                        className="rounded-lg border border-neutral-200 bg-white px-4 py-2.5 text-sm font-medium text-neutral-700 shadow-sm outline-none transition focus:border-brand-green focus:ring-2 focus:ring-brand-green/20"
+                    >
+                        <option value="Todas">Todas as Propriedades</option>
+                        <option value="Fazenda Esperança">Fazenda Esperança</option>
+                        <option value="Haras Boa VistaLTDA">Haras Boa Vista</option>
+                    </select>
+                    <select className="rounded-lg border border-neutral-200 bg-white px-4 py-2.5 text-sm font-medium text-neutral-700 shadow-sm outline-none transition focus:border-brand-green focus:ring-2 focus:ring-brand-green/20">
+                        <option>Estação 2026/2027</option>
+                        <option>Estação 2025/2026</option>
+                    </select>
+                </div>
             </div>
 
             {/* ── KPIs ── */}
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                {KPIs.map((kpi) => (
+                {dynamicKPIs.map((kpi) => (
                     <div
                         key={kpi.label}
                         className="flex items-center gap-4 rounded-xl border border-neutral-200 bg-white p-5 shadow-sm"
@@ -281,7 +316,7 @@ export default function CentralReproducao() {
 
                     <div className="divide-y divide-neutral-100">
                         {FUNIL_SECTIONS.map((section) => {
-                            const eguas = EGUAS_FUNIL.filter(
+                            const eguas = eguasFiltradas.filter(
                                 (e) => e.status === section.status
                             );
 
