@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
     Users,
     TrendingUp,
@@ -8,7 +9,11 @@ import {
     Activity,
     Search,
     AlertCircle,
+    Stethoscope,
+    Heart,
 } from "lucide-react";
+
+/* ─────────────────────── Tipos ─────────────────────── */
 
 /* ─────────────────────── Tipos ─────────────────────── */
 
@@ -212,6 +217,7 @@ const AVATAR_COLORS = [
 /* ─────────────────────── Componente ─────────────────────── */
 
 export default function CentralReproducao() {
+    const navigate = useNavigate();
     const [propriedadeFiltro, setPropriedadeFiltro] = useState<string>("Todas");
 
     const eguasFiltradas = EGUAS_FUNIL.filter(
@@ -278,6 +284,38 @@ export default function CentralReproducao() {
                         <option>Estação 2025/2026</option>
                     </select>
                 </div>
+            </div>
+
+            {/* ── Ações Reprodutivas (Atalhos Rápidos) ── */}
+            <div className="grid grid-cols-2 gap-4 md:grid-cols-4 mb-8">
+                <button
+                    onClick={() => navigate('/reproducao/novo-exame')}
+                    className="flex cursor-pointer flex-col items-center justify-center rounded-xl border border-neutral-200 bg-white p-4 shadow-sm transition-all hover:border-brand-blue hover:shadow-md"
+                >
+                    <Stethoscope className="mb-2 h-6 w-6 text-brand-blue" />
+                    <span className="text-sm font-bold text-neutral-800">Novo Exame</span>
+                </button>
+                <button
+                    onClick={() => navigate('/reproducao/nova-cobertura')}
+                    className="flex cursor-pointer flex-col items-center justify-center rounded-xl border border-neutral-200 bg-white p-4 shadow-sm transition-all hover:border-brand-blue hover:shadow-md"
+                >
+                    <Heart className="mb-2 h-6 w-6 text-brand-blue" />
+                    <span className="text-sm font-bold text-neutral-800">Nova Cobertura/IA</span>
+                </button>
+                <button
+                    onClick={() => navigate('/reproducao/diagnostico')}
+                    className="flex cursor-pointer flex-col items-center justify-center rounded-xl border border-neutral-200 bg-white p-4 shadow-sm transition-all hover:border-brand-blue hover:shadow-md"
+                >
+                    <Activity className="mb-2 h-6 w-6 text-brand-blue" />
+                    <span className="text-sm font-bold text-neutral-800">Diagnóstico de Gestação</span>
+                </button>
+                <button
+                    onClick={() => navigate('/reproducao/parto')}
+                    className="flex cursor-pointer flex-col items-center justify-center rounded-xl border border-neutral-200 bg-white p-4 shadow-sm transition-all hover:border-brand-blue hover:shadow-md"
+                >
+                    <Baby className="mb-2 h-6 w-6 text-brand-blue" />
+                    <span className="text-sm font-bold text-neutral-800">Registrar Parto</span>
+                </button>
             </div>
 
             {/* ── KPIs ── */}
