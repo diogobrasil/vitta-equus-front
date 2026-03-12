@@ -225,6 +225,7 @@ export default function ProntuariosClinicos() {
                                     <div className="flex items-center justify-end gap-1">
                                         <button
                                             type="button"
+                                            onClick={() => navigate(`/clinico/${at.id}`)}
                                             aria-label="Ver detalhes"
                                             title="Ver Detalhes"
                                             className="rounded-lg p-2 text-neutral-400 transition-colors hover:bg-neutral-100 hover:text-brand-blue"
