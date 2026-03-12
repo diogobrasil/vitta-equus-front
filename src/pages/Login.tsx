@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { HeartPulse, Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
+import LogoVitaEquus from '../assets/logo_vitaequus.png';
 
 export default function Login() {
     const [showPassword, setShowPassword] = useState(false);
@@ -17,21 +18,16 @@ export default function Login() {
             {/* ─── Coluna Esquerda: Formulário ─── */}
             <div className="flex items-center justify-center bg-white px-6 py-12 sm:px-12 lg:px-20">
                 <div className="w-full max-w-md space-y-8">
-                    {/* Branding */}
-                    <div className="flex items-center gap-2">
-                        <HeartPulse className="h-8 w-8 text-brand-blue" strokeWidth={2.2} />
-                        <span className="text-xl font-bold text-neutral-800 tracking-tight">
-                            VitaEquus
-                        </span>
-                    </div>
+                    {/* Logo */}
+                    <img src={LogoVitaEquus} alt="Logo VitaEquus" className="mx-auto h-40 mb-4 rounded-lg" />
 
                     {/* Títulos */}
                     <div className="space-y-1">
-                        <h1 className="text-2xl font-bold text-neutral-900 sm:text-3xl">
-                            Acesse sua conta
+                        <h1 className="text-2xl font-bold text-brand-blue sm:text-3xl">
+                            Faça seu login
                         </h1>
                         <p className="text-sm text-neutral-500">
-                            Insira suas credenciais para gerenciar o haras.
+                            Insira suas credenciais.
                         </p>
                     </div>
 
@@ -118,7 +114,7 @@ export default function Login() {
                             href="#"
                             className="font-medium text-brand-blue hover:text-brand-blue/80 transition-colors"
                         >
-                            Fale com o administrador
+                            Faça seu cadastro
                         </a>
                     </p>
                 </div>

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Outlet, NavLink } from "react-router-dom";
 import {
-    HeartPulse,
     LayoutGrid,
     List,
     Stethoscope,
@@ -9,7 +8,9 @@ import {
     Search,
     Bell,
     Database,
+    HeartPulse,
 } from "lucide-react";
+import LogoVitaEquus from '../../assets/logo_vitaequus.png';
 
 /* ─── Itens do menu lateral ─── */
 interface NavItem {
@@ -62,19 +63,16 @@ export default function MainLayout() {
           fixed inset-y-0 left-0 z-40 flex w-sidebar flex-col
           bg-brand-blue transition-transform duration-200
           ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
-          md:translate-x-0 md:static md:z-auto
+          md:translate-x-0 md:sticky md:top-0 md:h-screen md:z-auto
         `}
             >
                 {/* Logo */}
-                <div className="flex items-center gap-2.5 px-6 py-5">
-                    <HeartPulse className="h-7 w-7 text-brand-green" strokeWidth={2.4} />
-                    <span className="text-lg font-bold tracking-tight text-white">
-                        VitaEquus
-                    </span>
+                <div className="flex items-center justify-center border-b border-brand-blue/10 p-2 rounded-b-lg">
+                    <img src={LogoVitaEquus} alt="Logo VitaEquus" className="w-48 h-40 rounded-lg" />
                 </div>
 
                 {/* Nav links */}
-                <nav className="mt-2 flex-1 space-y-1 px-3">
+                <nav className="mt-2 pt-8 flex-1 space-y-1 px-3">
                     {NAV_ITEMS.map((item) => (
                         <NavLink
                             key={item.to}
