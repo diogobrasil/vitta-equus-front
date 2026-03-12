@@ -166,14 +166,16 @@ export default function CadastrosGerais() {
 
             {/* ── Conteúdo dinâmico ── */}
             <div className="overflow-x-auto">
-                {activeTab === "proprietarios" && renderProprietariosTable()}
+                {activeTab === "proprietarios" && renderProprietariosTable((id) => navigate(`/cadastros/proprietario/editar/${id}`))}
                 {activeTab === "propriedades" &&
-                    renderPropriedadesTable((nome) =>
-                        navigate("/plantel", {
-                            state: { propriedadeNome: nome },
-                        })
+                    renderPropriedadesTable(
+                        (nome) =>
+                            navigate("/plantel", {
+                                state: { propriedadeNome: nome },
+                            }),
+                        (id) => navigate(`/cadastros/propriedade/editar/${id}`)
                     )}
-                {activeTab === "fornecedores" && renderFornecedoresTable()}
+                {activeTab === "fornecedores" && renderFornecedoresTable((id) => navigate(`/cadastros/fornecedor/editar/${id}`))}
             </div>
         </div>
     );
@@ -181,7 +183,7 @@ export default function CadastrosGerais() {
 
 /* ─────────────────────── Tabelas auxiliares ─────────────────────── */
 
-function ActionButtons({ onViewAnimals }: { onViewAnimals?: () => void }) {
+function ActionButtons({ onViewAnimals, onEdit }: { onViewAnimals?: () => void; onEdit?: () => void }) {
     return (
         <div className="flex items-center justify-end gap-1">
             {onViewAnimals && (
@@ -197,6 +199,7 @@ function ActionButtons({ onViewAnimals }: { onViewAnimals?: () => void }) {
             )}
             <button
                 type="button"
+                onClick={onEdit}
                 aria-label="Editar"
                 title="Editar"
                 className="rounded-lg p-2 text-neutral-400 transition-colors hover:bg-neutral-100 hover:text-brand-blue"
@@ -215,7 +218,7 @@ function ActionButtons({ onViewAnimals }: { onViewAnimals?: () => void }) {
     );
 }
 
-function renderProprietariosTable() {
+function renderProprietariosTable(onEdit: (id: number) => void) {
     return (
         <table className="w-full text-left text-sm">
             <thead>
@@ -246,7 +249,7 @@ function renderProprietariosTable() {
                             {p.email}
                         </td>
                         <td className="px-6 py-4">
-                            <ActionButtons />
+                            <ActionButtons onEdit={() => onEdit(p.id)} />
                         </td>
                     </tr>
                 ))}
@@ -255,7 +258,7 @@ function renderProprietariosTable() {
     );
 }
 
-function renderPropriedadesTable(onViewAnimals: (nome: string) => void) {
+function renderPropriedadesTable(onViewAnimals: (nome: string) => void, onEdit: (id: number) => void) {
     return (
         <table className="w-full text-left text-sm">
             <thead>
@@ -282,7 +285,7 @@ function renderPropriedadesTable(onViewAnimals: (nome: string) => void) {
                             {p.cidadeUf}
                         </td>
                         <td className="px-6 py-4">
-                            <ActionButtons onViewAnimals={() => onViewAnimals(p.nome)} />
+                            <ActionButtons onViewAnimals={() => onViewAnimals(p.nome)} onEdit={() => onEdit(p.id)} />
                         </td>
                     </tr>
                 ))}
@@ -291,7 +294,7 @@ function renderPropriedadesTable(onViewAnimals: (nome: string) => void) {
     );
 }
 
-function renderFornecedoresTable() {
+function renderFornecedoresTable(onEdit: (id: number) => void) {
     return (
         <table className="w-full text-left text-sm">
             <thead>
@@ -324,7 +327,7 @@ function renderFornecedoresTable() {
                             {f.telefone}
                         </td>
                         <td className="px-6 py-4">
-                            <ActionButtons />
+                            <ActionButtons onEdit={() => onEdit(f.id)} />
                         </td>
                     </tr>
                 ))}

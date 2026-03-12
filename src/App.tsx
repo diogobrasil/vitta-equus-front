@@ -19,6 +19,9 @@ import EditarAnimal from "./pages/EditarAnimal";
 import NovoProprietario from "./pages/NovoProprietario";
 import NovaPropriedade from "./pages/NovaPropriedade";
 import NovoFornecedor from "./pages/NovoFornecedor";
+import EditarProprietario from "./pages/EditarProprietario";
+import EditarPropriedade from "./pages/EditarPropriedade";
+import EditarFornecedor from "./pages/EditarFornecedor";
 
 export default function App() {
   return (
@@ -36,8 +39,11 @@ export default function App() {
           <Route path="/farmacia/novo" element={<NovoInsumo />} />
           <Route path="/cadastros" element={<CadastrosGerais />} />
           <Route path="/cadastros/proprietario/novo" element={<NovoProprietario />} />
+          <Route path="/cadastros/proprietario/editar/:id" element={<EditarProprietario />} />
           <Route path="/cadastros/propriedade/nova" element={<NovaPropriedade />} />
+          <Route path="/cadastros/propriedade/editar/:id" element={<EditarPropriedade />} />
           <Route path="/cadastros/fornecedor/novo" element={<NovoFornecedor />} />
+          <Route path="/cadastros/fornecedor/editar/:id" element={<EditarFornecedor />} />
           <Route path="/plantel/novo" element={<NovoAnimal />} />
 
           <Route path="/plantel/:id" element={<PerfilAnimal />} />
