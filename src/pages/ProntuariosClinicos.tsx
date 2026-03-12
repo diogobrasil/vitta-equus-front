@@ -1,10 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Search, Plus, Eye, Edit } from "lucide-react";
+import { Search, Plus, Eye } from "lucide-react";
 
 /* ─────────────────────── Tipos ─────────────────────── */
-
-type StatusAtendimento = "em_tratamento" | "alta" | "obito";
 
 interface AtendimentoSummary {
     id: number;
@@ -14,7 +12,6 @@ interface AtendimentoSummary {
     avatar: string;
     veterinario: string;
     queixa: string;
-    status: StatusAtendimento;
     propriedade: string;
 }
 
@@ -29,7 +26,6 @@ const MOCK_ATENDIMENTOS: AtendimentoSummary[] = [
         avatar: "CA",
         veterinario: "Dr. Carlos",
         queixa: "Claudicação membro anterior direito",
-        status: "em_tratamento",
         propriedade: "Fazenda Esperança",
     },
     {
@@ -40,7 +36,6 @@ const MOCK_ATENDIMENTOS: AtendimentoSummary[] = [
         avatar: "ED",
         veterinario: "Dra. Marina",
         queixa: "Cólica leve",
-        status: "alta",
         propriedade: "Haras Boa VistaLTDA",
     },
     {
@@ -51,7 +46,6 @@ const MOCK_ATENDIMENTOS: AtendimentoSummary[] = [
         avatar: "TN",
         veterinario: "Dr. Carlos",
         queixa: "Vacinação de rotina",
-        status: "alta",
         propriedade: "Fazenda Esperança",
     },
     {
@@ -62,7 +56,6 @@ const MOCK_ATENDIMENTOS: AtendimentoSummary[] = [
         avatar: "EC",
         veterinario: "Dr. Carlos",
         queixa: "Síndrome cólica grave — encaminhado para cirurgia",
-        status: "obito",
         propriedade: "Haras Boa VistaLTDA",
     },
     {
@@ -73,24 +66,11 @@ const MOCK_ATENDIMENTOS: AtendimentoSummary[] = [
         avatar: "VE",
         veterinario: "Dra. Marina",
         queixa: "Ferida lacerante no membro posterior esquerdo",
-        status: "em_tratamento",
         propriedade: "Fazenda Esperança",
     },
 ];
 
 /* ─────────────────────── Helpers visuais ─────────────────────── */
-
-const STATUS_BADGE: Record<StatusAtendimento, string> = {
-    em_tratamento: "bg-amber-100 text-amber-700",
-    alta: "bg-brand-green/20 text-green-800",
-    obito: "bg-neutral-200 text-neutral-600",
-};
-
-const STATUS_LABEL: Record<StatusAtendimento, string> = {
-    em_tratamento: "Em Tratamento",
-    alta: "Alta Médica",
-    obito: "Óbito",
-};
 
 const AVATAR_COLORS = [
     "bg-brand-blue",
@@ -106,7 +86,6 @@ export default function ProntuariosClinicos() {
     const navigate = useNavigate();
     const [busca, setBusca] = useState("");
     const [propriedadeFiltro, setPropriedadeFiltro] = useState("Todas");
-    const [filtroStatus, setFiltroStatus] = useState("Todos");
     const [filtroPeriodo, setFiltroPeriodo] = useState("Todos");
 
     const atendimentosFiltrados = MOCK_ATENDIMENTOS.filter((a) => {
@@ -114,10 +93,6 @@ export default function ProntuariosClinicos() {
             busca === "" ||
             a.animalNome.toLowerCase().includes(busca.toLowerCase()) ||
             a.veterinario.toLowerCase().includes(busca.toLowerCase());
-
-        const matchStatus =
-            filtroStatus === "Todos" ||
-            STATUS_LABEL[a.status] === filtroStatus;
             
         const matchPropriedade = 
             propriedadeFiltro === "Todas" || 
@@ -126,7 +101,7 @@ export default function ProntuariosClinicos() {
         // Período simplificado (mock — sem lógica real de datas)
         const matchPeriodo = filtroPeriodo !== undefined;
 
-        return matchBusca && matchStatus && matchPeriodo && matchPropriedade;
+        return matchBusca && matchPeriodo && matchPropriedade;
     });
 
     const inputClass =
@@ -180,18 +155,6 @@ export default function ProntuariosClinicos() {
                     />
                 </div>
 
-                {/* Filtro Status */}
-                <select
-                    value={filtroStatus}
-                    onChange={(e) => setFiltroStatus(e.target.value)}
-                    className={inputClass}
-                >
-                    <option>Todos</option>
-                    <option>Em Tratamento</option>
-                    <option>Alta Médica</option>
-                    <option>Óbito</option>
-                </select>
-
                 {/* Filtro Período */}
                 <select
                     value={filtroPeriodo}
@@ -214,7 +177,6 @@ export default function ProntuariosClinicos() {
                             <th className="px-6 py-3">Animal</th>
                             <th className="px-6 py-3">Veterinário</th>
                             <th className="px-6 py-3">Queixa Principal</th>
-                            <th className="px-6 py-3">Status</th>
                             <th className="px-6 py-3 text-right">Ações</th>
                         </tr>
                     </thead>
@@ -258,15 +220,6 @@ export default function ProntuariosClinicos() {
                                     {at.queixa}
                                 </td>
 
-                                {/* Status */}
-                                <td className="px-6 py-4">
-                                    <span
-                                        className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ${STATUS_BADGE[at.status]}`}
-                                    >
-                                        {STATUS_LABEL[at.status]}
-                                    </span>
-                                </td>
-
                                 {/* Ações */}
                                 <td className="px-6 py-4">
                                     <div className="flex items-center justify-end gap-1">
@@ -278,14 +231,6 @@ export default function ProntuariosClinicos() {
                                         >
                                             <Eye className="h-4 w-4" />
                                         </button>
-                                        <button
-                                            type="button"
-                                            aria-label="Editar"
-                                            title="Editar"
-                                            className="rounded-lg p-2 text-neutral-400 transition-colors hover:bg-neutral-100 hover:text-brand-blue"
-                                        >
-                                            <Edit className="h-4 w-4" />
-                                        </button>
                                     </div>
                                 </td>
                             </tr>
@@ -294,7 +239,7 @@ export default function ProntuariosClinicos() {
                         {atendimentosFiltrados.length === 0 && (
                             <tr>
                                 <td
-                                    colSpan={6}
+                                    colSpan={5}
                                     className="px-6 py-12 text-center text-sm text-neutral-400"
                                 >
                                     Nenhum atendimento encontrado com os filtros
