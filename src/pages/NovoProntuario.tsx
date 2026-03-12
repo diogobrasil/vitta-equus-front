@@ -1,50 +1,82 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Save } from "lucide-react";
+import { ArrowLeft, Save, Plus, Trash2 } from "lucide-react";
 
 /* ─────────────────────── Tipos ─────────────────────── */
 
-interface ProntuarioForm {
-    animalId: string;
-    veterinarioId: string;
-    dataHora: string;
-    queixa: string;
-    fc: string;
-    fr: string;
-    temperatura: string;
-    mucosas: string;
-    diagnostico: string;
-    prescricao: string;
+interface MedicacaoAplicada {
+    id: string; // ID temporário para o React renderizar a lista
+    insumoId: string;
+    dose: string;
+    viaAdministracao: string;
+    observacao: string;
 }
 
-const INITIAL_STATE: ProntuarioForm = {
+interface ProntuarioForm {
+    animalId: string;
+    propriedadeId: string;
+    veterinarioId: string;
+    dataHora: string;
+    tipoAtendimento: string;
+    queixa: string;
+    diagnostico: string;
+    conduta: string;
+}
+
+const INITIAL_FORM: ProntuarioForm = {
     animalId: "",
+    propriedadeId: "",
     veterinarioId: "",
     dataHora: "",
+    tipoAtendimento: "",
     queixa: "",
-    fc: "",
-    fr: "",
-    temperatura: "",
-    mucosas: "",
     diagnostico: "",
-    prescricao: "",
+    conduta: "",
 };
 
 /* ─────────────────────── Componente ─────────────────────── */
 
 export default function NovoProntuario() {
     const navigate = useNavigate();
-    const [form, setForm] = useState<ProntuarioForm>(INITIAL_STATE);
+    const [form, setForm] = useState<ProntuarioForm>(INITIAL_FORM);
+    const [medicacoes, setMedicacoes] = useState<MedicacaoAplicada[]>([]);
 
-    const update = (field: keyof ProntuarioForm, value: string) =>
+    const updateForm = (field: keyof ProntuarioForm, value: string) =>
         setForm((prev) => ({ ...prev, [field]: value }));
+
+    const handleAddMedicacao = () => {
+        setMedicacoes((prev) => [
+            ...prev,
+            {
+                id: crypto.randomUUID(),
+                insumoId: "",
+                dose: "",
+                viaAdministracao: "",
+                observacao: "",
+            },
+        ]);
+    };
+
+    const handleRemoveMedicacao = (id: string) => {
+        setMedicacoes((prev) => prev.filter((med) => med.id !== id));
+    };
+
+    const updateMedicacao = (id: string, field: keyof MedicacaoAplicada, value: string) => {
+        setMedicacoes((prev) =>
+            prev.map((med) => (med.id === id ? { ...med, [field]: value } : med))
+        );
+    };
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        console.log(
-            "📤 Dados do Prontuário Clínico:",
-            JSON.stringify(form, null, 2)
-        );
+
+        // payload que seria enviado para a API
+        const payload = {
+            ...form,
+            medicacoesAplicadas: medicacoes.map(({ id, ...rest }) => rest), // Remove o UUID no payload final
+        };
+
+        console.log("📤 Dados do Prontuário Clínico:", JSON.stringify(payload, null, 2));
         alert("Prontuário salvo com sucesso! (verifique o console)");
     };
 
@@ -69,8 +101,8 @@ export default function NovoProntuario() {
                     Novo Prontuário Clínico
                 </h1>
                 <p className="mt-1 text-sm text-neutral-500">
-                    Registro de anamnese, sinais vitais, diagnóstico e prescrição
-                    de medicamentos.
+                    Registro de anamnese, diagnóstico, conduta e medicações
+                    aplicadas.
                 </p>
             </div>
 
@@ -79,13 +111,13 @@ export default function NovoProntuario() {
                 onSubmit={handleSubmit}
                 className="mx-auto max-w-4xl rounded-xl border border-neutral-200 bg-white shadow-sm"
             >
-                {/* ─── Seção 1: Dados do Atendimento ─── */}
+                {/* ─── Seção 1: Identificação ─── */}
                 <div className="border-b border-neutral-100 p-6 space-y-5">
                     <h2 className="text-lg font-semibold text-brand-blue">
-                        Dados do Atendimento
+                        Identificação
                     </h2>
 
-                    <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
+                    <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                         {/* Paciente */}
                         <div className="space-y-1.5">
                             <label
@@ -97,16 +129,32 @@ export default function NovoProntuario() {
                             <select
                                 id="animal"
                                 value={form.animalId}
-                                onChange={(e) =>
-                                    update("animalId", e.target.value)
-                                }
+                                onChange={(e) => updateForm("animalId", e.target.value)}
                                 className={inputClass}
                             >
                                 <option value="">Selecione o animal…</option>
                                 <option value="1">Campeão (Box 08)</option>
-                                <option value="2">
-                                    Estrela Dalva (Box 05)
-                                </option>
+                                <option value="2">Estrela Dalva (Box 05)</option>
+                            </select>
+                        </div>
+
+                        {/* Propriedade */}
+                        <div className="space-y-1.5">
+                            <label
+                                htmlFor="propriedade"
+                                className="block text-sm font-semibold text-neutral-700"
+                            >
+                                Propriedade
+                            </label>
+                            <select
+                                id="propriedade"
+                                value={form.propriedadeId}
+                                onChange={(e) => updateForm("propriedadeId", e.target.value)}
+                                className={inputClass}
+                            >
+                                <option value="">Selecione a propriedade…</option>
+                                <option value="1">Fazenda Esperança</option>
+                                <option value="2">Haras Boa Vista</option>
                             </select>
                         </div>
 
@@ -121,9 +169,7 @@ export default function NovoProntuario() {
                             <select
                                 id="veterinario"
                                 value={form.veterinarioId}
-                                onChange={(e) =>
-                                    update("veterinarioId", e.target.value)
-                                }
+                                onChange={(e) => updateForm("veterinarioId", e.target.value)}
                                 className={inputClass}
                             >
                                 <option value="">Selecione…</option>
@@ -144,191 +190,200 @@ export default function NovoProntuario() {
                                 id="dataHora"
                                 type="datetime-local"
                                 value={form.dataHora}
-                                onChange={(e) =>
-                                    update("dataHora", e.target.value)
-                                }
+                                onChange={(e) => updateForm("dataHora", e.target.value)}
                                 className={inputClass}
                             />
                         </div>
                     </div>
                 </div>
 
-                {/* ─── Seção 2: Anamnese e Sinais Vitais ─── */}
+                {/* ─── Seção 2: Dados Clínicos ─── */}
                 <div className="border-b border-neutral-100 p-6 space-y-5">
                     <h2 className="text-lg font-semibold text-brand-blue">
-                        Avaliação Clínica
+                        Dados Clínicos
                     </h2>
 
-                    {/* Queixa */}
-                    <div className="space-y-1.5">
-                        <label
-                            htmlFor="queixa"
-                            className="block text-sm font-semibold text-neutral-700"
-                        >
-                            Queixa Principal / Histórico
-                        </label>
-                        <textarea
-                            id="queixa"
-                            rows={3}
-                            placeholder="Motivo do atendimento..."
-                            value={form.queixa}
-                            onChange={(e) => update("queixa", e.target.value)}
-                            className="w-full rounded-lg border border-neutral-200 bg-neutral-50 px-4 py-2.5 text-sm text-neutral-700 placeholder:text-neutral-400 outline-none transition resize-none focus:border-brand-green focus:ring-2 focus:ring-brand-green/20"
-                        />
-                    </div>
-
-                    {/* Sinais Vitais */}
-                    <div className="grid grid-cols-2 gap-5 sm:grid-cols-4">
-                        {/* FC */}
-                        <div className="space-y-1.5">
+                    <div className="space-y-5">
+                        {/* Tipo de Atendimento */}
+                        <div className="space-y-1.5 sm:w-1/2">
                             <label
-                                htmlFor="fc"
+                                htmlFor="tipoAtendimento"
                                 className="block text-sm font-semibold text-neutral-700"
                             >
-                                Freq. Cardíaca (FC)
-                            </label>
-                            <div className="relative">
-                                <input
-                                    id="fc"
-                                    type="number"
-                                    min={0}
-                                    placeholder="Ex: 36"
-                                    value={form.fc}
-                                    onChange={(e) =>
-                                        update("fc", e.target.value)
-                                    }
-                                    className={`${inputClass} pr-14`}
-                                />
-                                <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-xs font-semibold text-neutral-400">
-                                    bpm
-                                </span>
-                            </div>
-                        </div>
-
-                        {/* FR */}
-                        <div className="space-y-1.5">
-                            <label
-                                htmlFor="fr"
-                                className="block text-sm font-semibold text-neutral-700"
-                            >
-                                Freq. Respiratória (FR)
-                            </label>
-                            <div className="relative">
-                                <input
-                                    id="fr"
-                                    type="number"
-                                    min={0}
-                                    placeholder="Ex: 12"
-                                    value={form.fr}
-                                    onChange={(e) =>
-                                        update("fr", e.target.value)
-                                    }
-                                    className={`${inputClass} pr-16`}
-                                />
-                                <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-xs font-semibold text-neutral-400">
-                                    mpm
-                                </span>
-                            </div>
-                        </div>
-
-                        {/* Temperatura */}
-                        <div className="space-y-1.5">
-                            <label
-                                htmlFor="temperatura"
-                                className="block text-sm font-semibold text-neutral-700"
-                            >
-                                Temperatura
-                            </label>
-                            <div className="relative">
-                                <input
-                                    id="temperatura"
-                                    type="number"
-                                    min={30}
-                                    max={45}
-                                    step={0.1}
-                                    placeholder="Ex: 37.5"
-                                    value={form.temperatura}
-                                    onChange={(e) =>
-                                        update("temperatura", e.target.value)
-                                    }
-                                    className={`${inputClass} pr-12`}
-                                />
-                                <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-xs font-semibold text-neutral-400">
-                                    °C
-                                </span>
-                            </div>
-                        </div>
-
-                        {/* Mucosas */}
-                        <div className="space-y-1.5">
-                            <label
-                                htmlFor="mucosas"
-                                className="block text-sm font-semibold text-neutral-700"
-                            >
-                                Mucosas
+                                Tipo de Atendimento
                             </label>
                             <select
-                                id="mucosas"
-                                value={form.mucosas}
-                                onChange={(e) =>
-                                    update("mucosas", e.target.value)
-                                }
+                                id="tipoAtendimento"
+                                value={form.tipoAtendimento}
+                                onChange={(e) => updateForm("tipoAtendimento", e.target.value)}
                                 className={inputClass}
                             >
                                 <option value="">Selecione…</option>
-                                <option>Normocoradas</option>
-                                <option>Pálidas</option>
-                                <option>Congestas</option>
-                                <option>Cianóticas</option>
+                                <option value="clínico geral">Clínico Geral</option>
+                                <option value="vacinação">Vacinação</option>
+                                <option value="vermifugação">Vermifugação</option>
+                                <option value="exame laboratório">Exame Laboratorial</option>
                             </select>
+                        </div>
+
+                        {/* Queixa Principal */}
+                        <div className="space-y-1.5">
+                            <label
+                                htmlFor="queixa"
+                                className="block text-sm font-semibold text-neutral-700"
+                            >
+                                Queixa Principal
+                            </label>
+                            <textarea
+                                id="queixa"
+                                rows={3}
+                                placeholder="Descreva os motivos e o histórico do atendimento..."
+                                value={form.queixa}
+                                onChange={(e) => updateForm("queixa", e.target.value)}
+                                className="w-full rounded-lg border border-neutral-200 bg-neutral-50 px-4 py-2.5 text-sm text-neutral-700 placeholder:text-neutral-400 outline-none transition resize-none focus:border-brand-green focus:ring-2 focus:ring-brand-green/20"
+                            />
+                        </div>
+
+                        {/* Diagnóstico Presuntivo */}
+                        <div className="space-y-1.5">
+                            <label
+                                htmlFor="diagnostico"
+                                className="block text-sm font-semibold text-neutral-700"
+                            >
+                                Diagnóstico Presuntivo
+                            </label>
+                            <textarea
+                                id="diagnostico"
+                                rows={2}
+                                placeholder="Descreva o diagnóstico inicial..."
+                                value={form.diagnostico}
+                                onChange={(e) => updateForm("diagnostico", e.target.value)}
+                                className="w-full rounded-lg border border-neutral-200 bg-neutral-50 px-4 py-2.5 text-sm text-neutral-700 placeholder:text-neutral-400 outline-none transition resize-none focus:border-brand-green focus:ring-2 focus:ring-brand-green/20"
+                            />
+                        </div>
+
+                        {/* Conduta */}
+                        <div className="space-y-1.5">
+                            <label
+                                htmlFor="conduta"
+                                className="block text-sm font-semibold text-neutral-700"
+                            >
+                                Conduta
+                            </label>
+                            <textarea
+                                id="conduta"
+                                rows={2}
+                                placeholder="Descreva os procedimentos realizados ou orientações..."
+                                value={form.conduta}
+                                onChange={(e) => updateForm("conduta", e.target.value)}
+                                className="w-full rounded-lg border border-neutral-200 bg-neutral-50 px-4 py-2.5 text-sm text-neutral-700 placeholder:text-neutral-400 outline-none transition resize-none focus:border-brand-green focus:ring-2 focus:ring-brand-green/20"
+                            />
                         </div>
                     </div>
                 </div>
 
-                {/* ─── Seção 3: Diagnóstico e Tratamento ─── */}
+                {/* ─── Seção 3: Medicações Aplicadas ─── */}
                 <div className="border-b border-neutral-100 p-6 space-y-5">
-                    <h2 className="text-lg font-semibold text-brand-blue">
-                        Diagnóstico e Tratamento
-                    </h2>
-
-                    {/* Diagnóstico */}
-                    <div className="space-y-1.5">
-                        <label
-                            htmlFor="diagnostico"
-                            className="block text-sm font-semibold text-neutral-700"
-                        >
-                            Diagnóstico Presuntivo / Definitivo
-                        </label>
-                        <textarea
-                            id="diagnostico"
-                            rows={2}
-                            placeholder="Descreva o diagnóstico…"
-                            value={form.diagnostico}
-                            onChange={(e) =>
-                                update("diagnostico", e.target.value)
-                            }
-                            className="w-full rounded-lg border border-neutral-200 bg-neutral-50 px-4 py-2.5 text-sm text-neutral-700 placeholder:text-neutral-400 outline-none transition resize-none focus:border-brand-green focus:ring-2 focus:ring-brand-green/20"
-                        />
+                    <div className="flex items-center justify-between">
+                        <h2 className="text-lg font-semibold text-brand-blue">
+                            Medicações Aplicadas
+                        </h2>
                     </div>
 
-                    {/* Prescrição */}
-                    <div className="space-y-1.5">
-                        <label
-                            htmlFor="prescricao"
-                            className="block text-sm font-semibold text-neutral-700"
+                    <div className="space-y-4">
+                        {medicacoes.map((med, index) => (
+                            <div key={med.id} className="relative rounded-lg border border-neutral-200 bg-neutral-50/50 p-4">
+                                <button
+                                    type="button"
+                                    onClick={() => handleRemoveMedicacao(med.id)}
+                                    className="absolute -top-3 -right-3 flex h-7 w-7 items-center justify-center rounded-full border border-red-200 bg-white text-red-500 shadow-sm transition hover:bg-red-50 hover:text-red-600"
+                                    title="Remover Medicação"
+                                    aria-label="Remover Medicação"
+                                >
+                                    <Trash2 className="h-4 w-4" />
+                                </button>
+                                
+                                <h3 className="mb-3 text-xs font-semibold text-neutral-500 uppercase tracking-wider">
+                                    Medicação {index + 1}
+                                </h3>
+
+                                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                                    <div className="space-y-1.5 sm:col-span-2 lg:col-span-1">
+                                        <label className="block text-xs font-semibold text-neutral-700">
+                                            Insumo
+                                        </label>
+                                        <select
+                                            value={med.insumoId}
+                                            onChange={(e) => updateMedicacao(med.id, "insumoId", e.target.value)}
+                                            className={inputClass}
+                                        >
+                                            <option value="">Selecione…</option>
+                                            <option value="1">Fenilbutazona</option>
+                                            <option value="2">Soro Fisiológico (Ringer)</option>
+                                            <option value="3">Flunixin Meglumine</option>
+                                        </select>
+                                    </div>
+
+                                    <div className="space-y-1.5">
+                                        <label className="block text-xs font-semibold text-neutral-700">
+                                            Dose / Quantidade
+                                        </label>
+                                        <input
+                                            type="text"
+                                            value={med.dose}
+                                            onChange={(e) => updateMedicacao(med.id, "dose", e.target.value)}
+                                            placeholder="Ex: 10ml"
+                                            className={inputClass}
+                                        />
+                                    </div>
+
+                                    <div className="space-y-1.5">
+                                        <label className="block text-xs font-semibold text-neutral-700">
+                                            Via de Admin.
+                                        </label>
+                                        <select
+                                            value={med.viaAdministracao}
+                                            onChange={(e) => updateMedicacao(med.id, "viaAdministracao", e.target.value)}
+                                            className={inputClass}
+                                        >
+                                            <option value="">Selecione…</option>
+                                            <option value="IV">Intravenosa (IV)</option>
+                                            <option value="IM">Intramuscular (IM)</option>
+                                            <option value="Oral">Oral</option>
+                                            <option value="SC">Subcutânea (SC)</option>
+                                        </select>
+                                    </div>
+
+                                    <div className="space-y-1.5 sm:col-span-2 lg:col-span-1">
+                                        <label className="block text-xs font-semibold text-neutral-700">
+                                            Observações
+                                        </label>
+                                        <input
+                                            type="text"
+                                            value={med.observacao}
+                                            onChange={(e) => updateMedicacao(med.id, "observacao", e.target.value)}
+                                            placeholder="Ex: Diluído"
+                                            className={inputClass}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+
+                        {medicacoes.length === 0 && (
+                            <div className="py-6 text-center text-sm text-neutral-500 border-2 border-dashed border-neutral-200 rounded-lg">
+                                Nenhuma medicação aplicada registrada neste atendimento.
+                            </div>
+                        )}
+
+                        <button
+                            type="button"
+                            onClick={handleAddMedicacao}
+                            className="inline-flex w-full items-center justify-center gap-2 rounded-lg border-2 border-dashed border-brand-blue/30 bg-brand-blue/5 px-5 py-3 text-sm font-semibold text-brand-blue transition-colors hover:border-brand-blue/50 hover:bg-brand-blue/10"
                         >
-                            Prescrição / Medicamentos Aplicados
-                        </label>
-                        <textarea
-                            id="prescricao"
-                            rows={3}
-                            placeholder="Descreva os medicamentos, doses e vias de administração (ex: Fenilbutazona 4,4 mg/kg IV)..."
-                            value={form.prescricao}
-                            onChange={(e) =>
-                                update("prescricao", e.target.value)
-                            }
-                            className="w-full rounded-lg border border-neutral-200 bg-neutral-50 px-4 py-2.5 text-sm text-neutral-700 placeholder:text-neutral-400 outline-none transition resize-none focus:border-brand-green focus:ring-2 focus:ring-brand-green/20"
-                        />
+                            <Plus className="h-4 w-4" />
+                            Adicionar Medicação
+                        </button>
                     </div>
                 </div>
 
