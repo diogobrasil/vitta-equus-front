@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { ArrowLeft, Save, AlertTriangle } from "lucide-react";
+import { ArrowLeft, Save, AlertTriangle, Camera } from "lucide-react";
 
 /* ─────────────────────── Tipos ─────────────────────── */
 
@@ -13,6 +13,9 @@ interface AnimalForm {
     pelagem: string;
     proprietario: string;
     propriedade: string;
+    cuidador: string;
+    idProdutor: string;
+    idDoadora: string;
     status: string;
     observacoes: string;
 }
@@ -32,6 +35,9 @@ export default function EditarAnimal() {
         pelagem: "",
         proprietario: "",
         propriedade: "",
+        cuidador: "",
+        idProdutor: "",
+        idDoadora: "",
         status: "Ativo",
         observacoes: "",
     });
@@ -48,6 +54,9 @@ export default function EditarAnimal() {
             pelagem: "Alazã",
             proprietario: "1",
             propriedade: "1",
+            cuidador: "Carlos Silva",
+            idProdutor: "Trovão Negro",
+            idDoadora: "Princesa",
             status: "Ativo",
             observacoes:
                 "Cicatriz pequena no membro anterior direito. Temperamento dócil.",
@@ -76,6 +85,17 @@ export default function EditarAnimal() {
 
     const isInactive = form.status !== "Ativo";
 
+    const [fotoPreview, setFotoPreview] = useState<string | null>(
+        "https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?auto=format&fit=crop&w=150&q=80"
+    );
+
+    const handleFotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            setFotoPreview(URL.createObjectURL(file));
+        }
+    };
+
     return (
         <div className="space-y-6">
             {/* ── Botão Voltar ── */}
@@ -97,6 +117,26 @@ export default function EditarAnimal() {
                     Atualize as informações cadastrais ou altere o status do
                     animal.
                 </p>
+            </div>
+
+            {/* ── Avatar / Foto ── */}
+            <div className="flex flex-col items-center mb-8">
+                <div className="w-32 h-32 rounded-full bg-gray-100 border-2 border-dashed border-gray-300 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-200 transition-colors relative overflow-hidden">
+                    {fotoPreview ? (
+                        <img src={fotoPreview} alt="Foto do animal" className="w-full h-full object-cover" />
+                    ) : (
+                        <>
+                            <Camera className="w-8 h-8 text-gray-400" />
+                            <span className="text-sm text-gray-500 mt-2">Adicionar Foto</span>
+                        </>
+                    )}
+                    <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleFotoChange}
+                        className="absolute inset-0 opacity-0 cursor-pointer"
+                    />
+                </div>
             </div>
 
             {/* ── Card do Formulário ── */}
@@ -255,7 +295,7 @@ export default function EditarAnimal() {
                         Propriedade e Localização
                     </h2>
 
-                    <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                    <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
                         {/* Proprietário */}
                         <div className="space-y-1.5">
                             <label
@@ -303,6 +343,84 @@ export default function EditarAnimal() {
                                 </option>
                             </select>
                         </div>
+
+                        {/* Cuidador Responsável */}
+                        <div className="space-y-1.5">
+                            <label
+                                htmlFor="cuidador"
+                                className="block text-sm font-semibold text-neutral-700"
+                            >
+                                Cuidador Responsável
+                            </label>
+                            <select
+                                id="cuidador"
+                                value={form.cuidador}
+                                onChange={(e) =>
+                                    update("cuidador", e.target.value)
+                                }
+                                className={inputClass}
+                            >
+                                <option value="">Selecione…</option>
+                                <option>Carlos Silva</option>
+                                <option>José Pereira</option>
+                                <option>Sem cuidador vinculado</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                {/* ─── Seção 4: Genealogia (Pedigree) ─── */}
+                <div className="border-b border-neutral-100 p-6 space-y-5">
+                    <h2 className="text-lg font-semibold text-brand-blue">
+                        Genealogia (Pedigree)
+                    </h2>
+
+                    <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                        {/* Pai (Produtor) */}
+                        <div className="space-y-1.5">
+                            <label
+                                htmlFor="idProdutor"
+                                className="block text-sm font-semibold text-neutral-700"
+                            >
+                                Pai (Produtor)
+                            </label>
+                            <select
+                                id="idProdutor"
+                                value={form.idProdutor}
+                                onChange={(e) =>
+                                    update("idProdutor", e.target.value)
+                                }
+                                className={inputClass}
+                            >
+                                <option value="">Selecione…</option>
+                                <option>Trovão Negro</option>
+                                <option>Campeão</option>
+                                <option>Desconhecido</option>
+                            </select>
+                        </div>
+
+                        {/* Mãe (Doadora/Receptora) */}
+                        <div className="space-y-1.5">
+                            <label
+                                htmlFor="idDoadora"
+                                className="block text-sm font-semibold text-neutral-700"
+                            >
+                                Mãe (Doadora / Receptora)
+                            </label>
+                            <select
+                                id="idDoadora"
+                                value={form.idDoadora}
+                                onChange={(e) =>
+                                    update("idDoadora", e.target.value)
+                                }
+                                className={inputClass}
+                            >
+                                <option value="">Selecione…</option>
+                                <option>Estrela Dalva</option>
+                                <option>Princesa</option>
+                                <option>Desconhecida</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
 
@@ -326,8 +444,8 @@ export default function EditarAnimal() {
                             className={inputClass}
                         >
                             <option>Ativo</option>
-                            <option>Inativo / Aposentado</option>
-                            <option>Vendido / Transferido</option>
+                            <option>Inativo</option>
+                            <option>Vendido</option>
                             <option>Óbito</option>
                         </select>
                     </div>

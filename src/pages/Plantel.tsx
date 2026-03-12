@@ -17,6 +17,7 @@ interface Animal {
     raca: string;
     pelagem: string;
     status: StatusAnimal;
+    propriedade: string;
 }
 
 /* ─────────────────────── Dados mockados ─────────────────────── */
@@ -31,6 +32,7 @@ const MOCK_ANIMAIS: Animal[] = [
         raca: "Mangalarga Marchador",
         pelagem: "Tordilho",
         status: "ativo",
+        propriedade: "Fazenda Esperança",
     },
     {
         id: 2,
@@ -41,6 +43,7 @@ const MOCK_ANIMAIS: Animal[] = [
         raca: "Quarto de Milha",
         pelagem: "Alazão",
         status: "ativo",
+        propriedade: "Centro Reprodutivo Sul",
     },
     {
         id: 3,
@@ -51,6 +54,7 @@ const MOCK_ANIMAIS: Animal[] = [
         raca: "Mangalarga Marchador",
         pelagem: "Castanho",
         status: "ativo",
+        propriedade: "Haras Boa Vista",
     },
     {
         id: 4,
@@ -61,6 +65,7 @@ const MOCK_ANIMAIS: Animal[] = [
         raca: "Lusitano",
         pelagem: "Tordilho Negro",
         status: "vendido",
+        propriedade: "Fazenda Esperança",
     },
     {
         id: 5,
@@ -71,6 +76,7 @@ const MOCK_ANIMAIS: Animal[] = [
         raca: "Quarto de Milha",
         pelagem: "Baio",
         status: "ativo",
+        propriedade: "Centro Reprodutivo Sul",
     },
     {
         id: 6,
@@ -81,6 +87,7 @@ const MOCK_ANIMAIS: Animal[] = [
         raca: "Puro Sangue Inglês",
         pelagem: "Alazão",
         status: "óbito",
+        propriedade: "Haras Boa Vista",
     },
 ];
 
@@ -113,6 +120,7 @@ export default function Plantel() {
     const [busca, setBusca] = useState("");
     const [filtroCategoria, setFiltroCategoria] = useState("Todos");
     const [filtroStatus, setFiltroStatus] = useState("Todos");
+    const [propriedadeFiltro, setPropriedadeFiltro] = useState("Todas");
     const navigate = useNavigate();
 
     const animaisFiltrados = MOCK_ANIMAIS.filter((a) => {
@@ -127,7 +135,10 @@ export default function Plantel() {
         const matchStatus =
             filtroStatus === "Todos" || a.status === filtroStatus.toLowerCase();
 
-        return matchBusca && matchCategoria && matchStatus;
+        const matchPropriedade =
+            propriedadeFiltro === "Todas" || a.propriedade === propriedadeFiltro;
+
+        return matchBusca && matchCategoria && matchStatus && matchPropriedade;
     });
 
     return (
@@ -136,7 +147,7 @@ export default function Plantel() {
             <div className="flex flex-col gap-4 border-b border-neutral-100 p-6 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                     <h1 className="text-xl font-bold text-neutral-900 sm:text-2xl">
-                        Gestão de Plantel
+                        Cavalos
                     </h1>
                     <p className="mt-1 text-sm text-neutral-500">
                         Controle e listagem de todos os equinos da propriedade.
@@ -150,6 +161,20 @@ export default function Plantel() {
                     <Plus className="h-4 w-4" />
                     Cadastrar Animal
                 </button>
+            </div>
+
+            {/* ── Filtro de Propriedade (destaque) ── */}
+            <div className="border-b border-neutral-100 px-6 py-4">
+                <select
+                    value={propriedadeFiltro}
+                    onChange={(e) => setPropriedadeFiltro(e.target.value)}
+                    className="w-full sm:w-auto rounded-lg border-2 border-brand-blue bg-white px-5 py-3 text-lg font-semibold text-brand-blue shadow-md outline-none transition focus:ring-2 focus:ring-brand-blue/30 cursor-pointer"
+                >
+                    <option value="Todas">Todas as Propriedades</option>
+                    <option value="Fazenda Esperança">Fazenda Esperança</option>
+                    <option value="Centro Reprodutivo Sul">Centro Reprodutivo Sul</option>
+                    <option value="Haras Boa Vista">Haras Boa Vista</option>
+                </select>
             </div>
 
             {/* ── Barra de ferramentas ── */}
