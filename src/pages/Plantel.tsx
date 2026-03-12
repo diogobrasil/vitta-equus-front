@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Search, Eye, Edit, Plus, Mars, Venus } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 /* ─────────────────────── Tipos ─────────────────────── */
 
@@ -117,11 +117,15 @@ const AVATAR_COLORS = [
 /* ─────────────────────── Componente ─────────────────────── */
 
 export default function Plantel() {
+    const location = useLocation();
+    const navigate = useNavigate();
+
     const [busca, setBusca] = useState("");
     const [filtroCategoria, setFiltroCategoria] = useState("Todos");
     const [filtroStatus, setFiltroStatus] = useState("Todos");
-    const [propriedadeFiltro, setPropriedadeFiltro] = useState("Todas");
-    const navigate = useNavigate();
+    const [propriedadeFiltro, setPropriedadeFiltro] = useState(
+        location.state?.propriedadeNome || "Todas"
+    );
 
     const animaisFiltrados = MOCK_ANIMAIS.filter((a) => {
         const matchBusca =
@@ -164,7 +168,7 @@ export default function Plantel() {
             </div>
 
             {/* ── Filtro de Propriedade (destaque) ── */}
-            <div className="border-b border-neutral-100 px-6 py-4">
+            <div className="border-b border-neutral-100 px-6 py-4 flex flex-col sm:flex-row sm:items-center gap-4">
                 <select
                     value={propriedadeFiltro}
                     onChange={(e) => setPropriedadeFiltro(e.target.value)}
@@ -175,6 +179,19 @@ export default function Plantel() {
                     <option value="Centro Reprodutivo Sul">Centro Reprodutivo Sul</option>
                     <option value="Haras Boa Vista">Haras Boa Vista</option>
                 </select>
+
+                {location.state?.propriedadeNome && propriedadeFiltro !== "Todas" && (
+                    <button
+                        type="button"
+                        onClick={() => {
+                            setPropriedadeFiltro("Todas");
+                            navigate(location.pathname, { replace: true });
+                        }}
+                        className="text-sm font-medium text-brand-blue hover:underline"
+                    >
+                        Limpar Filtro
+                    </button>
+                )}
             </div>
 
             {/* ── Barra de ferramentas ── */}

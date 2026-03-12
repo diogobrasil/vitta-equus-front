@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Users, MapPin, Truck, Edit, Trash2, Plus } from "lucide-react";
+import { Users, MapPin, Truck, Edit, Trash2, Plus, List } from "lucide-react";
 
 /* ─────────────────────── Tipos ─────────────────────── */
 
@@ -167,7 +167,12 @@ export default function CadastrosGerais() {
             {/* ── Conteúdo dinâmico ── */}
             <div className="overflow-x-auto">
                 {activeTab === "proprietarios" && renderProprietariosTable()}
-                {activeTab === "propriedades" && renderPropriedadesTable()}
+                {activeTab === "propriedades" &&
+                    renderPropriedadesTable((nome) =>
+                        navigate("/plantel", {
+                            state: { propriedadeNome: nome },
+                        })
+                    )}
                 {activeTab === "fornecedores" && renderFornecedoresTable()}
             </div>
         </div>
@@ -176,9 +181,20 @@ export default function CadastrosGerais() {
 
 /* ─────────────────────── Tabelas auxiliares ─────────────────────── */
 
-function ActionButtons() {
+function ActionButtons({ onViewAnimals }: { onViewAnimals?: () => void }) {
     return (
         <div className="flex items-center justify-end gap-1">
+            {onViewAnimals && (
+                <button
+                    type="button"
+                    onClick={onViewAnimals}
+                    aria-label="Ver animais desta propriedade"
+                    title="Ver animais desta propriedade"
+                    className="rounded-lg p-2 text-neutral-400 transition-colors hover:bg-brand-blue/10 hover:text-brand-blue"
+                >
+                    <List className="h-4 w-4" />
+                </button>
+            )}
             <button
                 type="button"
                 aria-label="Editar"
@@ -239,7 +255,7 @@ function renderProprietariosTable() {
     );
 }
 
-function renderPropriedadesTable() {
+function renderPropriedadesTable(onViewAnimals: (nome: string) => void) {
     return (
         <table className="w-full text-left text-sm">
             <thead>
@@ -266,7 +282,7 @@ function renderPropriedadesTable() {
                             {p.cidadeUf}
                         </td>
                         <td className="px-6 py-4">
-                            <ActionButtons />
+                            <ActionButtons onViewAnimals={() => onViewAnimals(p.nome)} />
                         </td>
                     </tr>
                 ))}

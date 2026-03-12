@@ -6,18 +6,22 @@ import { ArrowLeft, Save } from "lucide-react";
 
 interface PropriedadeForm {
     nome: string;
-    proprietario: string;
-    cidadeUf: string;
-    inscricao: string;
-    foco: string;
+    tipo_propriedade: string;
+    endereco: string;
+    cidade: string;
+    estado: string;
+    celular: string;
+    email: string;
 }
 
 const INITIAL: PropriedadeForm = {
     nome: "",
-    proprietario: "",
-    cidadeUf: "",
-    inscricao: "",
-    foco: "",
+    tipo_propriedade: "",
+    endereco: "",
+    cidade: "",
+    estado: "",
+    celular: "",
+    email: "",
 };
 
 /* ─────────────────────── Componente ─────────────────────── */
@@ -75,13 +79,14 @@ export default function NovaPropriedade() {
                             <input id="nome" type="text" value={form.nome} onChange={(e) => update("nome", e.target.value)} placeholder="Ex: Fazenda Esperança" className={inputClass} />
                         </div>
                         <div className="space-y-1.5">
-                            <label htmlFor="proprietario" className="block text-sm font-semibold text-neutral-700">
-                                Proprietário Responsável
+                            <label htmlFor="tipo_propriedade" className="block text-sm font-semibold text-neutral-700">
+                                Tipo de Propriedade
                             </label>
-                            <select id="proprietario" value={form.proprietario} onChange={(e) => update("proprietario", e.target.value)} className={inputClass}>
+                            <select id="tipo_propriedade" value={form.tipo_propriedade} onChange={(e) => update("tipo_propriedade", e.target.value)} className={inputClass}>
                                 <option value="">Selecione…</option>
-                                <option value="1">João da Silva</option>
-                                <option value="2">Haras Boa Vista LTDA</option>
+                                <option>Haras</option>
+                                <option>Centro de Reprodução</option>
+                                <option>Fazenda</option>
                             </select>
                         </div>
                     </div>
@@ -92,38 +97,46 @@ export default function NovaPropriedade() {
                     <h2 className="text-lg font-semibold text-brand-blue">
                         Localização
                     </h2>
+                    <div className="space-y-1.5">
+                        <label htmlFor="endereco" className="block text-sm font-semibold text-neutral-700">
+                            Endereço
+                        </label>
+                        <input id="endereco" type="text" value={form.endereco} onChange={(e) => update("endereco", e.target.value)} placeholder="Ex: Rodovia MG-10, Km 42" className={inputClass} />
+                    </div>
                     <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                         <div className="space-y-1.5">
-                            <label htmlFor="cidadeUf" className="block text-sm font-semibold text-neutral-700">
-                                Cidade / UF
+                            <label htmlFor="cidade" className="block text-sm font-semibold text-neutral-700">
+                                Cidade
                             </label>
-                            <input id="cidadeUf" type="text" value={form.cidadeUf} onChange={(e) => update("cidadeUf", e.target.value)} placeholder="Ex: Belo Horizonte / MG" className={inputClass} />
+                            <input id="cidade" type="text" value={form.cidade} onChange={(e) => update("cidade", e.target.value)} placeholder="Ex: Belo Horizonte" className={inputClass} />
                         </div>
                         <div className="space-y-1.5">
-                            <label htmlFor="inscricao" className="block text-sm font-semibold text-neutral-700">
-                                Inscrição Estadual / NIRF
+                            <label htmlFor="estado" className="block text-sm font-semibold text-neutral-700">
+                                Estado (UF)
                             </label>
-                            <input id="inscricao" type="text" value={form.inscricao} onChange={(e) => update("inscricao", e.target.value)} placeholder="Opcional" className={inputClass} />
+                            <input id="estado" type="text" value={form.estado} onChange={(e) => update("estado", e.target.value)} placeholder="Ex: MG" className={inputClass} />
                         </div>
                     </div>
                 </div>
 
-                {/* Seção 3: Detalhes */}
+                {/* Seção 3: Contato */}
                 <div className="border-b border-neutral-100 p-6 space-y-5">
                     <h2 className="text-lg font-semibold text-brand-blue">
-                        Detalhes
+                        Contato
                     </h2>
-                    <div className="max-w-sm space-y-1.5">
-                        <label htmlFor="foco" className="block text-sm font-semibold text-neutral-700">
-                            Foco Principal
-                        </label>
-                        <select id="foco" value={form.foco} onChange={(e) => update("foco", e.target.value)} className={inputClass}>
-                            <option value="">Selecione…</option>
-                            <option>Reprodução</option>
-                            <option>Treinamento</option>
-                            <option>Criação</option>
-                            <option>Misto</option>
-                        </select>
+                    <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                        <div className="space-y-1.5">
+                            <label htmlFor="celular" className="block text-sm font-semibold text-neutral-700">
+                                Celular / WhatsApp
+                            </label>
+                            <input id="celular" type="text" value={form.celular} onChange={(e) => update("celular", e.target.value)} placeholder="Ex: (31) 99876-5432" className={inputClass} />
+                        </div>
+                        <div className="space-y-1.5">
+                            <label htmlFor="email" className="block text-sm font-semibold text-neutral-700">
+                                E-mail
+                            </label>
+                            <input id="email" type="email" value={form.email} onChange={(e) => update("email", e.target.value)} placeholder="Ex: contato@fazenda.com" className={inputClass} />
+                        </div>
                     </div>
                 </div>
 

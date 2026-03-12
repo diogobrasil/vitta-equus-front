@@ -6,18 +6,18 @@ import { ArrowLeft, Save } from "lucide-react";
 
 interface ProprietarioForm {
     nome: string;
-    cpfCnpj: string;
+    tipo_documento: string;
+    nrdocumento: string;
     telefone: string;
     email: string;
-    endereco: string;
 }
 
 const INITIAL: ProprietarioForm = {
     nome: "",
-    cpfCnpj: "",
+    tipo_documento: "",
+    nrdocumento: "",
     telefone: "",
     email: "",
-    endereco: "",
 };
 
 /* ─────────────────────── Componente ─────────────────────── */
@@ -67,18 +67,28 @@ export default function NovoProprietario() {
                     <h2 className="text-lg font-semibold text-brand-blue">
                         Dados Principais
                     </h2>
+                    <div className="space-y-1.5">
+                        <label htmlFor="nome" className="block text-sm font-semibold text-neutral-700">
+                            Nome Completo / Razão Social
+                        </label>
+                        <input id="nome" type="text" value={form.nome} onChange={(e) => update("nome", e.target.value)} placeholder="Ex: João da Silva" className={inputClass} />
+                    </div>
                     <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                         <div className="space-y-1.5">
-                            <label htmlFor="nome" className="block text-sm font-semibold text-neutral-700">
-                                Nome Completo / Razão Social
+                            <label htmlFor="tipo_documento" className="block text-sm font-semibold text-neutral-700">
+                                Tipo de Documento
                             </label>
-                            <input id="nome" type="text" value={form.nome} onChange={(e) => update("nome", e.target.value)} placeholder="Ex: João da Silva" className={inputClass} />
+                            <select id="tipo_documento" value={form.tipo_documento} onChange={(e) => update("tipo_documento", e.target.value)} className={inputClass}>
+                                <option value="">Selecione…</option>
+                                <option>CPF</option>
+                                <option>CNPJ</option>
+                            </select>
                         </div>
                         <div className="space-y-1.5">
-                            <label htmlFor="cpfCnpj" className="block text-sm font-semibold text-neutral-700">
-                                CPF ou CNPJ
+                            <label htmlFor="nrdocumento" className="block text-sm font-semibold text-neutral-700">
+                                Número do Documento
                             </label>
-                            <input id="cpfCnpj" type="text" value={form.cpfCnpj} onChange={(e) => update("cpfCnpj", e.target.value)} placeholder="Ex: 123.456.789-00" className={inputClass} />
+                            <input id="nrdocumento" type="text" value={form.nrdocumento} onChange={(e) => update("nrdocumento", e.target.value)} placeholder="Ex: 123.456.789-00" className={inputClass} />
                         </div>
                     </div>
                 </div>
@@ -101,19 +111,6 @@ export default function NovoProprietario() {
                             </label>
                             <input id="email" type="email" value={form.email} onChange={(e) => update("email", e.target.value)} placeholder="contato@email.com" className={inputClass} />
                         </div>
-                    </div>
-                </div>
-
-                {/* Seção 3: Endereço */}
-                <div className="border-b border-neutral-100 p-6 space-y-5">
-                    <h2 className="text-lg font-semibold text-brand-blue">
-                        Endereço
-                    </h2>
-                    <div className="space-y-1.5">
-                        <label htmlFor="endereco" className="block text-sm font-semibold text-neutral-700">
-                            Endereço Completo
-                        </label>
-                        <input id="endereco" type="text" value={form.endereco} onChange={(e) => update("endereco", e.target.value)} placeholder="Rua, número, bairro, cidade – UF" className={inputClass} />
                     </div>
                 </div>
 

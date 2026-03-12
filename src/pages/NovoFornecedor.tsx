@@ -5,19 +5,15 @@ import { ArrowLeft, Save } from "lucide-react";
 /* ─────────────────────── Tipos ─────────────────────── */
 
 interface FornecedorForm {
-    nomeFantasia: string;
-    cnpj: string;
-    categoria: string;
-    vendedor: string;
+    nome: string;
+    contato: string;
     telefone: string;
     email: string;
 }
 
 const INITIAL: FornecedorForm = {
-    nomeFantasia: "",
-    cnpj: "",
-    categoria: "",
-    vendedor: "",
+    nome: "",
+    contato: "",
     telefone: "",
     email: "",
 };
@@ -71,48 +67,21 @@ export default function NovoFornecedor() {
                     </h2>
                     <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                         <div className="space-y-1.5">
-                            <label htmlFor="nomeFantasia" className="block text-sm font-semibold text-neutral-700">
-                                Nome Fantasia
+                            <label htmlFor="nome" className="block text-sm font-semibold text-neutral-700">
+                                Nome (Razão Social ou Fantasia)
                             </label>
-                            <input id="nomeFantasia" type="text" value={form.nomeFantasia} onChange={(e) => update("nomeFantasia", e.target.value)} placeholder="Ex: VetPharma S/A" className={inputClass} />
+                            <input id="nome" type="text" value={form.nome} onChange={(e) => update("nome", e.target.value)} placeholder="Ex: VetPharma S/A" className={inputClass} />
                         </div>
                         <div className="space-y-1.5">
-                            <label htmlFor="cnpj" className="block text-sm font-semibold text-neutral-700">
-                                CNPJ
+                            <label htmlFor="contato" className="block text-sm font-semibold text-neutral-700">
+                                Contato (Pessoa Responsável)
                             </label>
-                            <input id="cnpj" type="text" value={form.cnpj} onChange={(e) => update("cnpj", e.target.value)} placeholder="Ex: 12.345.678/0001-99" className={inputClass} />
+                            <input id="contato" type="text" value={form.contato} onChange={(e) => update("contato", e.target.value)} placeholder="Ex: João da Silva" className={inputClass} />
                         </div>
                     </div>
                 </div>
 
-                {/* Seção 2: Categoria e Contato */}
-                <div className="border-b border-neutral-100 p-6 space-y-5">
-                    <h2 className="text-lg font-semibold text-brand-blue">
-                        Categoria e Contato
-                    </h2>
-                    <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-                        <div className="space-y-1.5">
-                            <label htmlFor="categoria" className="block text-sm font-semibold text-neutral-700">
-                                Categoria Principal
-                            </label>
-                            <select id="categoria" value={form.categoria} onChange={(e) => update("categoria", e.target.value)} className={inputClass}>
-                                <option value="">Selecione…</option>
-                                <option>Medicamentos e Farmácia</option>
-                                <option>Ração e Nutrição</option>
-                                <option>Materiais de Consumo</option>
-                                <option>Sêmen e Genética</option>
-                            </select>
-                        </div>
-                        <div className="space-y-1.5">
-                            <label htmlFor="vendedor" className="block text-sm font-semibold text-neutral-700">
-                                Vendedor / Representante
-                            </label>
-                            <input id="vendedor" type="text" value={form.vendedor} onChange={(e) => update("vendedor", e.target.value)} placeholder="Nome do contato" className={inputClass} />
-                        </div>
-                    </div>
-                </div>
-
-                {/* Seção 3: Comunicação */}
+                {/* Seção 2: Comunicação */}
                 <div className="border-b border-neutral-100 p-6 space-y-5">
                     <h2 className="text-lg font-semibold text-brand-blue">
                         Comunicação
