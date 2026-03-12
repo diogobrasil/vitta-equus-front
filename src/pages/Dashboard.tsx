@@ -5,10 +5,6 @@ import {
     AlertCircle,
     CheckCircle2,
     Hash,
-    ChevronRight,
-    ClipboardList,
-    Syringe,
-    PlusSquare,
     ClipboardCopy,
 } from "lucide-react";
 
@@ -24,12 +20,6 @@ interface Exam {
     time: string;
 }
 
-interface QuickAction {
-    icon: React.ReactNode;
-    title: string;
-    subtitle: string;
-    route?: string;
-}
 
 interface Reminder {
     color: string;
@@ -105,25 +95,6 @@ const EXAMS: Exam[] = [
     },
 ];
 
-const QUICK_ACTIONS: QuickAction[] = [
-    {
-        icon: <ClipboardList className="h-5 w-5 text-brand-blue" />,
-        title: "Lançar Exame Diário",
-        subtitle: "Registrar sinais vitais de rotina",
-    },
-    {
-        icon: <Syringe className="h-5 w-5 text-brand-blue" />,
-        title: "Aplicar Medicação",
-        subtitle: "Registrar tratamento em curso",
-        route: "/clinico/novo",
-    },
-    {
-        icon: <PlusSquare className="h-5 w-5 text-brand-blue" />,
-        title: "Cadastrar Equino",
-        subtitle: "Adicionar novo animal no haras",
-        route: "/plantel/novo",
-    },
-];
 
 const REMINDERS: Reminder[] = [
     {
@@ -269,33 +240,6 @@ export default function Dashboard() {
 
                 {/* Coluna lateral (1/3) */}
                 <div className="flex flex-col gap-6">
-                    {/* Ações Rápidas */}
-                    <div className="rounded-xl border border-neutral-200 bg-white shadow-sm">
-                        <h2 className="border-b border-neutral-100 px-6 py-4 text-base font-bold text-neutral-800">
-                            Ações Rápidas
-                        </h2>
-                        <div className="divide-y divide-neutral-100">
-                            {QUICK_ACTIONS.map((a) => (
-                                <button
-                                    key={a.title}
-                                    type="button"
-                                    onClick={() => a.route && navigate(a.route)}
-                                    className="flex w-full items-center gap-4 px-6 py-4 text-left transition-colors hover:bg-neutral-50"
-                                >
-                                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-brand-green/20">
-                                        {a.icon}
-                                    </div>
-                                    <div className="flex-1 min-w-0">
-                                        <p className="text-sm font-semibold text-neutral-800">
-                                            {a.title}
-                                        </p>
-                                        <p className="text-xs text-neutral-400">{a.subtitle}</p>
-                                    </div>
-                                    <ChevronRight className="h-4 w-4 shrink-0 text-neutral-300" />
-                                </button>
-                            ))}
-                        </div>
-                    </div>
 
                     {/* Lembretes */}
                     <div className="rounded-xl border border-neutral-200 bg-white shadow-sm">
