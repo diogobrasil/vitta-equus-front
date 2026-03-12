@@ -2,8 +2,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
     Users,
-    TrendingUp,
-    HeartHandshake,
     Baby,
     ChevronRight,
     Activity,
@@ -14,15 +12,6 @@ import {
 } from "lucide-react";
 
 /* ─────────────────────── Tipos ─────────────────────── */
-
-/* ─────────────────────── Tipos ─────────────────────── */
-
-interface KPI {
-    label: string;
-    value: string | number;
-    icon: React.ReactNode;
-    bg: string;
-}
 
 type StatusReprodutivo =
     | "vazia"
@@ -224,37 +213,9 @@ export default function CentralReproducao() {
         (egua) => propriedadeFiltro === "Todas" || egua.propriedade === propriedadeFiltro
     );
 
-    const matrizesAtivasCount = eguasFiltradas.length;
+    const vaziasCount = eguasFiltradas.filter((e) => e.status === "vazia").length;
+    const acompanhamentoCount = eguasFiltradas.filter((e) => e.status === "acompanhamento").length;
     const prenhesCount = eguasFiltradas.filter((e) => e.status === "prenhe").length;
-    const taxaPrenhez = matrizesAtivasCount > 0 ? Math.round((prenhesCount / matrizesAtivasCount) * 100) : 0;
-
-    const dynamicKPIs: KPI[] = [
-        {
-            label: "Matrizes Ativas",
-            value: matrizesAtivasCount,
-            icon: <Users className="h-5 w-5 text-brand-blue" />,
-            bg: "bg-brand-blue/10",
-        },
-        {
-            label: "Taxa de Prenhez",
-            value: `${taxaPrenhez}%`,
-            icon: <TrendingUp className="h-5 w-5 text-brand-green" />,
-            bg: "bg-brand-green/15",
-        },
-        {
-            // mantendo fixo para simulação (em prod seria calculado)
-            label: "Coberturas na Estação",
-            value: 45,
-            icon: <HeartHandshake className="h-5 w-5 text-purple-600" />,
-            bg: "bg-purple-100",
-        },
-        {
-            label: "Nascimentos Previstos",
-            value: prenhesCount, 
-            icon: <Baby className="h-5 w-5 text-orange-600" />,
-            bg: "bg-orange-100",
-        },
-    ];
 
     return (
         <div className="space-y-8">
@@ -290,56 +251,68 @@ export default function CentralReproducao() {
             <div className="grid grid-cols-2 gap-4 md:grid-cols-4 mb-8">
                 <button
                     onClick={() => navigate('/reproducao/novo-exame')}
-                    className="flex cursor-pointer flex-col items-center justify-center rounded-xl border border-neutral-200 bg-white p-4 shadow-sm transition-all hover:border-brand-blue hover:shadow-md"
+                    className="group flex flex-col items-center justify-center p-6 bg-white border border-gray-200 rounded-xl cursor-pointer transition-all duration-300 hover:bg-brand-blue hover:border-brand-blue hover:shadow-lg"
                 >
-                    <Stethoscope className="mb-2 h-6 w-6 text-brand-blue" />
-                    <span className="text-sm font-bold text-neutral-800">Novo Exame</span>
+                    <Stethoscope className="w-8 h-8 mb-3 text-brand-blue group-hover:text-white transition-colors duration-300" />
+                    <span className="text-center font-semibold text-brand-blue group-hover:text-white transition-colors duration-300">Novo Exame</span>
                 </button>
                 <button
                     onClick={() => navigate('/reproducao/nova-cobertura')}
-                    className="flex cursor-pointer flex-col items-center justify-center rounded-xl border border-neutral-200 bg-white p-4 shadow-sm transition-all hover:border-brand-blue hover:shadow-md"
+                    className="group flex flex-col items-center justify-center p-6 bg-white border border-gray-200 rounded-xl cursor-pointer transition-all duration-300 hover:bg-brand-blue hover:border-brand-blue hover:shadow-lg"
                 >
-                    <Heart className="mb-2 h-6 w-6 text-brand-blue" />
-                    <span className="text-sm font-bold text-neutral-800">Nova Cobertura/IA</span>
+                    <Heart className="w-8 h-8 mb-3 text-brand-blue group-hover:text-white transition-colors duration-300" />
+                    <span className="text-center font-semibold text-brand-blue group-hover:text-white transition-colors duration-300">Nova Cobertura/IA</span>
                 </button>
                 <button
                     onClick={() => navigate('/reproducao/diagnostico')}
-                    className="flex cursor-pointer flex-col items-center justify-center rounded-xl border border-neutral-200 bg-white p-4 shadow-sm transition-all hover:border-brand-blue hover:shadow-md"
+                    className="group flex flex-col items-center justify-center p-6 bg-white border border-gray-200 rounded-xl cursor-pointer transition-all duration-300 hover:bg-brand-blue hover:border-brand-blue hover:shadow-lg"
                 >
-                    <Activity className="mb-2 h-6 w-6 text-brand-blue" />
-                    <span className="text-sm font-bold text-neutral-800">Diagnóstico de Gestação</span>
+                    <Activity className="w-8 h-8 mb-3 text-brand-blue group-hover:text-white transition-colors duration-300" />
+                    <span className="text-center font-semibold text-brand-blue group-hover:text-white transition-colors duration-300">Diagnóstico de Gestação</span>
                 </button>
                 <button
                     onClick={() => navigate('/reproducao/parto')}
-                    className="flex cursor-pointer flex-col items-center justify-center rounded-xl border border-neutral-200 bg-white p-4 shadow-sm transition-all hover:border-brand-blue hover:shadow-md"
+                    className="group flex flex-col items-center justify-center p-6 bg-white border border-gray-200 rounded-xl cursor-pointer transition-all duration-300 hover:bg-brand-blue hover:border-brand-blue hover:shadow-lg"
                 >
-                    <Baby className="mb-2 h-6 w-6 text-brand-blue" />
-                    <span className="text-sm font-bold text-neutral-800">Registrar Parto</span>
+                    <Baby className="w-8 h-8 mb-3 text-brand-blue group-hover:text-white transition-colors duration-300" />
+                    <span className="text-center font-semibold text-brand-blue group-hover:text-white transition-colors duration-300">Registrar Parto</span>
                 </button>
             </div>
 
-            {/* ── KPIs ── */}
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                {dynamicKPIs.map((kpi) => (
-                    <div
-                        key={kpi.label}
-                        className="flex items-center gap-4 rounded-xl border border-neutral-200 bg-white p-5 shadow-sm"
-                    >
-                        <div
-                            className={`flex h-11 w-11 items-center justify-center rounded-lg ${kpi.bg}`}
-                        >
-                            {kpi.icon}
-                        </div>
-                        <div>
-                            <p className="text-xs font-medium text-neutral-500">
-                                {kpi.label}
-                            </p>
-                            <p className="text-2xl font-bold text-neutral-900">
-                                {kpi.value}
-                            </p>
-                        </div>
+            {/* ── KPIs (Status Reprodutivo) ── */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                {/* Card Éguas Vazias */}
+                <div className="bg-white rounded-xl shadow-sm border border-gray-100 border-l-4 border-l-gray-400 p-6 flex items-center justify-between">
+                    <div>
+                        <p className="text-sm font-medium text-gray-500 uppercase tracking-wider mb-1">Éguas Vazias</p>
+                        <p className="text-3xl font-bold text-gray-800">{vaziasCount}</p>
                     </div>
-                ))}
+                    <div className="p-3 bg-gray-50 rounded-full">
+                        <Users className="w-6 h-6 text-gray-400" />
+                    </div>
+                </div>
+
+                {/* Card Em Acompanhamento */}
+                <div className="bg-white rounded-xl shadow-sm border border-gray-100 border-l-4 border-l-brand-blue p-6 flex items-center justify-between">
+                    <div>
+                        <p className="text-sm font-medium text-gray-500 uppercase tracking-wider mb-1">Em Acompanhamento</p>
+                        <p className="text-3xl font-bold text-gray-800">{acompanhamentoCount}</p>
+                    </div>
+                    <div className="p-3 bg-brand-blue/10 rounded-full">
+                        <Activity className="w-6 h-6 text-brand-blue" />
+                    </div>
+                </div>
+
+                {/* Card Prenhez Confirmada */}
+                <div className="bg-white rounded-xl shadow-sm border border-gray-100 border-l-4 border-l-green-500 p-6 flex items-center justify-between">
+                    <div>
+                        <p className="text-sm font-medium text-gray-500 uppercase tracking-wider mb-1">Prenhez Confirmada</p>
+                        <p className="text-3xl font-bold text-gray-800">{prenhesCount}</p>
+                    </div>
+                    <div className="p-3 bg-green-50 rounded-full">
+                        <Baby className="w-6 h-6 text-green-600" />
+                    </div>
+                </div>
             </div>
 
             {/* ── Conteúdo principal ── */}
