@@ -9,6 +9,7 @@ import {
     Database,
     HeartPulse,
 } from "lucide-react";
+import { GiHorseshoe } from "react-icons/gi";
 import LogoVitaEquus from '../../assets/logo_vitaequus.png';
 
 /* ─── Itens do menu lateral ─── */
@@ -23,13 +24,7 @@ const NAV_ITEMS: NavItem[] = [
     {
         to: "/plantel",
         label: "Cavalos",
-        icon: (
-            <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-                <path d="M5 3C5 3 4 10 4 14C4 17.3137 6.68629 20 10 20" />
-                <path d="M19 3C19 3 20 10 20 14C20 17.3137 17.3137 20 14 20" />
-                <path d="M10 20H14" />
-            </svg>
-        ),
+        icon: <GiHorseshoe className="h-5 w-5" />,
     },
     {
         to: "/reproducao",
