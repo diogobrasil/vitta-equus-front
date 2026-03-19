@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Outlet, NavLink } from "react-router-dom";
+import { Outlet, NavLink, useNavigate } from "react-router-dom";
 import {
     LayoutGrid,
     Stethoscope,
@@ -50,6 +50,7 @@ const NAV_ITEMS: NavItem[] = [
 
 export default function MainLayout() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
+    const navigate = useNavigate();
 
     return (
         <div className="flex min-h-screen bg-neutral-50">
@@ -146,7 +147,11 @@ export default function MainLayout() {
                             </span>
                         </button>
 
-                        <div className="flex items-center gap-3">
+                        <div 
+                            className="flex items-center gap-3 cursor-pointer hover:bg-neutral-100 p-2 rounded-lg transition-colors"
+                            onClick={() => navigate('/perfil')}
+                            title="Meu Perfil"
+                        >
                             <div className="h-9 w-9 rounded-full bg-brand-blue flex items-center justify-center text-sm font-bold text-white select-none">
                                 DC
                             </div>

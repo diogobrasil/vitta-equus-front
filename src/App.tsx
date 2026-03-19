@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import MainLayout from "./components/Layout/MainLayout";
 import Login from "./pages/Login";
+import PerfilUsuario from "./pages/PerfilUsuario";
 import Dashboard from "./pages/Dashboard";
 import Plantel from "./pages/Plantel";
 import PerfilAnimal from "./pages/PerfilAnimal";
@@ -30,6 +31,7 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/perfil" element={<PerfilUsuario />} />
 
         <Route element={<MainLayout />}>
           <Route index element={<Dashboard />} />
