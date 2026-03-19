@@ -38,6 +38,10 @@ const INITIAL_FORM: ProntuarioForm = {
 
 export default function NovoProntuario() {
     const navigate = useNavigate();
+
+    // Mock do usuário logado (veterinário)
+    const usuarioLogado = { id: 1, nome: "Dr. Carlos" };
+
     const [form, setForm] = useState<ProntuarioForm>(INITIAL_FORM);
     const [medicacoes, setMedicacoes] = useState<MedicacaoAplicada[]>([]);
 
@@ -73,6 +77,7 @@ export default function NovoProntuario() {
         // payload que seria enviado para a API
         const payload = {
             ...form,
+            fktb06idVeterinario: usuarioLogado.id,
             medicacoesAplicadas: medicacoes.map(({ id, ...rest }) => rest), // Remove o UUID no payload final
         };
 
@@ -166,16 +171,13 @@ export default function NovoProntuario() {
                             >
                                 Veterinário Responsável
                             </label>
-                            <select
+                            <input
                                 id="veterinario"
-                                value={form.veterinarioId}
-                                onChange={(e) => updateForm("veterinarioId", e.target.value)}
-                                className={inputClass}
-                            >
-                                <option value="">Selecione…</option>
-                                <option value="v1">Dr. Carlos</option>
-                                <option value="v2">Dra. Camila</option>
-                            </select>
+                                type="text"
+                                value={usuarioLogado.nome}
+                                disabled
+                                className="w-full rounded-lg border border-gray-200 bg-gray-100 px-4 py-2.5 text-sm text-gray-500 cursor-not-allowed outline-none focus:ring-0"
+                            />
                         </div>
 
                         {/* Data e Hora */}
