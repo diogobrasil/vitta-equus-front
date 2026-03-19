@@ -30,6 +30,10 @@ const INITIAL_STATE: ExameForm = {
 
 export default function NovoExameReprodutivo() {
     const navigate = useNavigate();
+
+    // Mock do usuário logado (veterinário)
+    const usuarioLogado = { id: 1, nome: "Dr. Carlos" };
+
     const [form, setForm] = useState<ExameForm>(INITIAL_STATE);
 
     /** Atualiza um campo do formulário */
@@ -39,7 +43,11 @@ export default function NovoExameReprodutivo() {
     /** Simula envio para a API */
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        console.log("📤 Dados do Exame Reprodutivo:", JSON.stringify(form, null, 2));
+        const payload = {
+            ...form,
+            fktb06idVeterinario: usuarioLogado.id,
+        };
+        console.log("📤 Dados do Exame Reprodutivo:", JSON.stringify(payload, null, 2));
         alert("Exame salvo com sucesso! (verifique o console)");
     };
 
@@ -115,7 +123,7 @@ export default function NovoExameReprodutivo() {
                         </div>
 
                         {/* Propriedade */}
-                        <div className="space-y-1.5 sm:col-span-2">
+                        <div className="space-y-1.5">
                             <label
                                 htmlFor="propriedade"
                                 className="block text-sm font-semibold text-neutral-700"
@@ -132,6 +140,23 @@ export default function NovoExameReprodutivo() {
                                 <option value="fbe">Fazenda Boa Esperança</option>
                                 <option value="crc">Centro de Reprodução Central</option>
                             </select>
+                        </div>
+
+                        {/* Veterinário Responsável */}
+                        <div className="space-y-1.5">
+                            <label
+                                htmlFor="veterinario"
+                                className="block text-sm font-semibold text-neutral-700"
+                            >
+                                Veterinário Responsável
+                            </label>
+                            <input
+                                id="veterinario"
+                                type="text"
+                                value={usuarioLogado.nome}
+                                disabled
+                                className="w-full rounded-lg border border-gray-200 bg-gray-100 px-4 py-2.5 text-sm text-gray-500 cursor-not-allowed outline-none"
+                            />
                         </div>
                     </div>
                 </div>

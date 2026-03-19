@@ -7,32 +7,33 @@ import { ArrowLeft, Save } from "lucide-react";
 interface GestacaoForm {
     eguaId: string;
     coberturaRef: string;
-    dataExame: string;
+    data_diagnostico_inicial: string;
     resultado: string;
-    diasGestacao: string;
-    previsaoParto: string;
+    data_previsao_parto: string;
     observacoes: string;
 }
 
 const INITIAL_STATE: GestacaoForm = {
     eguaId: "",
     coberturaRef: "",
-    dataExame: "",
+    data_diagnostico_inicial: "",
     resultado: "",
-    diasGestacao: "",
-    previsaoParto: "",
+    data_previsao_parto: "",
     observacoes: "",
 };
 
 const RESULTADOS_GESTACAO_ATIVA = [
-    "Positivo (Prenhe)",
-    "Gestação Gemelar",
+    "Prenhe"
 ];
 
 /* ─────────────────────── Componente ─────────────────────── */
 
 export default function DiagnosticoGestacao() {
     const navigate = useNavigate();
+
+    // Mock do usuário logado (veterinário)
+    const usuarioLogado = { id: 1, nome: "Dr. Carlos" };
+
     const [form, setForm] = useState<GestacaoForm>(INITIAL_STATE);
 
     const update = (field: keyof GestacaoForm, value: string) =>
@@ -45,7 +46,8 @@ export default function DiagnosticoGestacao() {
         e.preventDefault();
         const payload = {
             ...form,
-            previsaoParto: gestacaoAtiva ? form.previsaoParto : "",
+            fktb06idVeterinario: usuarioLogado.id,
+            data_previsao_parto: gestacaoAtiva ? form.data_previsao_parto : "",
         };
         console.log(
             "📤 Dados do Diagnóstico de Gestação:",
@@ -137,6 +139,23 @@ export default function DiagnosticoGestacao() {
                                 </option>
                             </select>
                         </div>
+
+                        {/* Veterinário Responsável */}
+                        <div className="space-y-1.5 sm:col-span-2">
+                            <label
+                                htmlFor="veterinario"
+                                className="block text-sm font-semibold text-neutral-700"
+                            >
+                                Veterinário Responsável
+                            </label>
+                            <input
+                                id="veterinario"
+                                type="text"
+                                value={usuarioLogado.nome}
+                                readOnly
+                                className="w-full rounded-lg border border-gray-200 bg-gray-100 px-4 py-2.5 text-sm text-gray-500 cursor-not-allowed outline-none"
+                            />
+                        </div>
                     </div>
                 </div>
 
@@ -146,21 +165,21 @@ export default function DiagnosticoGestacao() {
                         Resultado do Diagnóstico
                     </h2>
 
-                    <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
-                        {/* Data do Exame */}
+                    <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                        {/* Data do Diagnóstico Inicial */}
                         <div className="space-y-1.5">
                             <label
                                 htmlFor="dataExame"
                                 className="block text-sm font-semibold text-neutral-700"
                             >
-                                Data do Exame
+                                Data do Diagnóstico Inicial
                             </label>
                             <input
                                 id="dataExame"
                                 type="date"
-                                value={form.dataExame}
+                                value={form.data_diagnostico_inicial}
                                 onChange={(e) =>
-                                    update("dataExame", e.target.value)
+                                    update("data_diagnostico_inicial", e.target.value)
                                 }
                                 className={inputClass}
                             />
@@ -184,56 +203,36 @@ export default function DiagnosticoGestacao() {
                                             e.target.value
                                         )
                                     ) {
-                                        update("previsaoParto", "");
+                                        update("data_previsao_parto", "");
                                     }
                                 }}
                                 className={inputClass}
                             >
                                 <option value="">Selecione…</option>
-                                <option>Positivo (Prenhe)</option>
-                                <option>Negativo (Vazia)</option>
-                                <option>Gestação Gemelar</option>
-                                <option>Reabsorção Embrionária</option>
+                                <option value="Prenhe">Prenhe</option>
+                                <option value="Vazia">Vazia</option>
+                                <option value="Reabsorção">Reabsorção</option>
+                                <option value="Aborto">Aborto</option>
                             </select>
-                        </div>
-
-                        {/* Dias de Gestação */}
-                        <div className="space-y-1.5">
-                            <label
-                                htmlFor="diasGestacao"
-                                className="block text-sm font-semibold text-neutral-700"
-                            >
-                                Dias de Gestação (DGV)
-                            </label>
-                            <input
-                                id="diasGestacao"
-                                type="number"
-                                min={0}
-                                placeholder="Ex: 15"
-                                value={form.diasGestacao}
-                                onChange={(e) =>
-                                    update("diasGestacao", e.target.value)
-                                }
-                                className={inputClass}
-                            />
                         </div>
                     </div>
 
                     {/* Previsão de Parto — condicional */}
                     {gestacaoAtiva && (
-                        <div className="rounded-lg border border-green-200 bg-green-50 p-4 space-y-1.5">
+                        <div className="rounded-lg border border-green-200 bg-green-50 p-4 space-y-1.5 mt-5">
                             <label
                                 htmlFor="previsaoParto"
                                 className="block text-sm font-semibold text-green-800"
                             >
-                                Previsão de Parto (DPP)
+                                Data Prevista do Parto <span className="font-normal text-green-700">(~335 a 342 dias após cobertura)</span>
                             </label>
                             <input
                                 id="previsaoParto"
                                 type="date"
-                                value={form.previsaoParto}
+                                required
+                                value={form.data_previsao_parto}
                                 onChange={(e) =>
-                                    update("previsaoParto", e.target.value)
+                                    update("data_previsao_parto", e.target.value)
                                 }
                                 className="w-full rounded-lg border border-green-300 bg-white px-4 py-2.5 text-sm text-neutral-700 outline-none transition focus:border-brand-green focus:ring-2 focus:ring-brand-green/20"
                             />

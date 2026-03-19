@@ -7,6 +7,7 @@ import PerfilAnimal from "./pages/PerfilAnimal";
 import NovoExameReprodutivo from "./pages/NovoExameReprodutivo";
 import NovaCobertura from "./pages/NovaCobertura";
 import DiagnosticoGestacao from "./pages/DiagnosticoGestacao";
+import NovoCheckupGestacional from "./pages/NovoCheckupGestacional";
 import RegistroParto from "./pages/RegistroParto";
 import CentralReproducao from "./pages/CentralReproducao";
 import ProntuariosClinicos from "./pages/ProntuariosClinicos";
@@ -53,6 +54,7 @@ export default function App() {
           <Route path="/reproducao/novo-exame" element={<NovoExameReprodutivo />} />
           <Route path="/reproducao/nova-cobertura" element={<NovaCobertura />} />
           <Route path="/reproducao/diagnostico" element={<DiagnosticoGestacao />} />
+          <Route path="/reproducao/checkup" element={<NovoCheckupGestacional />} />
           <Route path="/reproducao/parto" element={<RegistroParto />} />
         </Route>
 

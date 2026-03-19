@@ -28,6 +28,10 @@ const INITIAL_STATE: CoberturaForm = {
 
 export default function NovaCobertura() {
     const navigate = useNavigate();
+
+    // Mock do usuário logado (veterinário)
+    const usuarioLogado = { id: 1, nome: "Dr. Carlos" };
+
     const [form, setForm] = useState<CoberturaForm>(INITIAL_STATE);
 
     const update = (field: keyof CoberturaForm, value: string) =>
@@ -40,6 +44,7 @@ export default function NovaCobertura() {
         e.preventDefault();
         const payload = {
             ...form,
+            fktb06idVeterinario: usuarioLogado.id,
             tipoSemen: semenDisabled ? "" : form.tipoSemen,
         };
         console.log("📤 Dados da Cobertura:", JSON.stringify(payload, null, 2));
@@ -124,6 +129,23 @@ export default function NovaCobertura() {
                                 <option value="3">Trovão Negro</option>
                                 <option value="4">Campeão</option>
                             </select>
+                        </div>
+
+                        {/* Veterinário Responsável */}
+                        <div className="space-y-1.5 sm:col-span-2">
+                            <label
+                                htmlFor="veterinario"
+                                className="block text-sm font-semibold text-neutral-700"
+                            >
+                                Veterinário Responsável
+                            </label>
+                            <input
+                                id="veterinario"
+                                type="text"
+                                value={usuarioLogado.nome}
+                                disabled
+                                className="w-full rounded-lg border border-gray-200 bg-gray-100 px-4 py-2.5 text-sm text-gray-500 cursor-not-allowed outline-none focus:ring-0"
+                            />
                         </div>
                     </div>
                 </div>

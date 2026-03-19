@@ -5,24 +5,28 @@ import { ArrowLeft, Save } from "lucide-react";
 /* ─────────────────────── Tipos ─────────────────────── */
 
 interface PartoForm {
-    eguaId: string;
+    fktb11idGestacao: string;
+    propriedade: string;
     dataHoraParto: string;
     tipoParto: string;
-    retencaoPlacenta: string;
+    resultado: string;
     condicaoNeonato: string;
     sexo: string;
     pelagem: string;
+    pesoNascimento: string;
     observacoes: string;
 }
 
 const INITIAL_STATE: PartoForm = {
-    eguaId: "",
+    fktb11idGestacao: "",
+    propriedade: "",
     dataHoraParto: "",
     tipoParto: "",
-    retencaoPlacenta: "",
+    resultado: "",
     condicaoNeonato: "",
     sexo: "",
     pelagem: "",
+    pesoNascimento: "",
     observacoes: "",
 };
 
@@ -30,6 +34,10 @@ const INITIAL_STATE: PartoForm = {
 
 export default function RegistroParto() {
     const navigate = useNavigate();
+
+    // Mock do usuário logado (veterinário)
+    const usuarioLogado = { id: 1, nome: "Dr. Carlos" };
+
     const [form, setForm] = useState<PartoForm>(INITIAL_STATE);
 
     const update = (field: keyof PartoForm, value: string) =>
@@ -42,8 +50,10 @@ export default function RegistroParto() {
         e.preventDefault();
         const payload = {
             ...form,
+            fktb06idVeterinario: usuarioLogado.id,
             sexo: isNatimorto ? "" : form.sexo,
             pelagem: isNatimorto ? "" : form.pelagem,
+            pesoNascimento: isNatimorto ? "" : form.pesoNascimento,
         };
         console.log(
             "📤 Dados do Registro de Parto:",
@@ -90,25 +100,45 @@ export default function RegistroParto() {
                         Dados da Gestação
                     </h2>
 
-                    <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-                        {/* Égua */}
+                    <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4">
+                        {/* Gestação / Égua */}
                         <div className="space-y-1.5">
                             <label
-                                htmlFor="egua"
+                                htmlFor="gestacao"
                                 className="block text-sm font-semibold text-neutral-700"
                             >
-                                Égua (Mãe)
+                                Gestação / Égua
                             </label>
                             <select
-                                id="egua"
-                                value={form.eguaId}
-                                onChange={(e) => update("eguaId", e.target.value)}
+                                id="gestacao"
+                                value={form.fktb11idGestacao}
+                                onChange={(e) => update("fktb11idGestacao", e.target.value)}
                                 className={inputClass}
                             >
-                                <option value="">Selecione a égua…</option>
+                                <option value="">Selecione a gestação…</option>
                                 <option value="1">
-                                    Estrela Dalva (Gestação: 330 dias)
+                                    Égua Princesa - Prev: 15/11/2026
                                 </option>
+                            </select>
+                        </div>
+                        
+                        {/* Propriedade */}
+                        <div className="space-y-1.5">
+                            <label
+                                htmlFor="propriedade"
+                                className="block text-sm font-semibold text-neutral-700"
+                            >
+                                Propriedade / Haras
+                            </label>
+                            <select
+                                id="propriedade"
+                                value={form.propriedade}
+                                onChange={(e) => update("propriedade", e.target.value)}
+                                className={inputClass}
+                            >
+                                <option value="">Selecione a propriedade…</option>
+                                <option value="fbe">Fazenda Boa Esperança</option>
+                                <option value="crc">Centro de Reprodução Central</option>
                             </select>
                         </div>
 
@@ -128,6 +158,23 @@ export default function RegistroParto() {
                                     update("dataHoraParto", e.target.value)
                                 }
                                 className={inputClass}
+                            />
+                        </div>
+
+                        {/* Veterinário Responsável */}
+                        <div className="space-y-1.5">
+                            <label
+                                htmlFor="veterinario"
+                                className="block text-sm font-semibold text-neutral-700"
+                            >
+                                Veterinário Responsável
+                            </label>
+                            <input
+                                id="veterinario"
+                                type="text"
+                                value={usuarioLogado.nome}
+                                readOnly
+                                className={disabledClass}
                             />
                         </div>
                     </div>
@@ -163,25 +210,25 @@ export default function RegistroParto() {
                             </select>
                         </div>
 
-                        {/* Retenção de Placenta */}
+                        {/* Resultado do Parto */}
                         <div className="space-y-1.5">
                             <label
-                                htmlFor="retencaoPlacenta"
+                                htmlFor="resultado"
                                 className="block text-sm font-semibold text-neutral-700"
                             >
-                                Retenção de Placenta
+                                Resultado do Parto
                             </label>
                             <select
-                                id="retencaoPlacenta"
-                                value={form.retencaoPlacenta}
+                                id="resultado"
+                                value={form.resultado}
                                 onChange={(e) =>
-                                    update("retencaoPlacenta", e.target.value)
+                                    update("resultado", e.target.value)
                                 }
                                 className={inputClass}
                             >
                                 <option value="">Selecione…</option>
-                                <option>Não (Expulsão normal)</option>
-                                <option>Sim (Requer intervenção)</option>
+                                <option value="Vivo">Vivo</option>
+                                <option value="Morto">Morto</option>
                             </select>
                         </div>
                     </div>
@@ -193,7 +240,7 @@ export default function RegistroParto() {
                         Dados do Potro
                     </h2>
 
-                    <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
+                    <div className="grid grid-cols-1 gap-5 md:grid-cols-4">
                         {/* Condição do Neonato */}
                         <div className="space-y-1.5">
                             <label
@@ -210,6 +257,7 @@ export default function RegistroParto() {
                                     if (e.target.value === "Natimorto") {
                                         update("sexo", "");
                                         update("pelagem", "");
+                                        update("pesoNascimento", "");
                                     }
                                 }}
                                 className={inputClass}
@@ -275,6 +323,31 @@ export default function RegistroParto() {
                                 <option>Tordilho</option>
                             </select>
                         </div>
+
+                        {/* Peso ao Nascer */}
+                        <div className="space-y-1.5">
+                            <label
+                                htmlFor="pesoNascimento"
+                                className="block text-sm font-semibold text-neutral-700"
+                            >
+                                Peso ao Nascer (kg){" "}
+                                {isNatimorto && (
+                                    <span className="font-normal text-neutral-400">
+                                        (N/A)
+                                    </span>
+                                )}
+                            </label>
+                            <input
+                                id="pesoNascimento"
+                                type="number"
+                                min={0}
+                                placeholder="Ex: 45"
+                                value={isNatimorto ? "" : form.pesoNascimento}
+                                onChange={(e) => update("pesoNascimento", e.target.value)}
+                                disabled={isNatimorto}
+                                className={isNatimorto ? disabledClass : inputClass}
+                            />
+                        </div>
                     </div>
                 </div>
 
@@ -294,7 +367,7 @@ export default function RegistroParto() {
                         <textarea
                             id="obs"
                             rows={4}
-                            placeholder="Ex: Cura do umbigo realizada, mamou colostro em 2 horas…"
+                            placeholder="Ex: Cura do umbigo realizada, retenção de placenta, mamou colostro em 2 horas…"
                             value={form.observacoes}
                             onChange={(e) =>
                                 update("observacoes", e.target.value)

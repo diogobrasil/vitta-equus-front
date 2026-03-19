@@ -9,6 +9,7 @@ import {
     AlertCircle,
     Stethoscope,
     Heart,
+    ClipboardCheck,
 } from "lucide-react";
 
 /* ─────────────────────── Tipos ─────────────────────── */
@@ -248,34 +249,41 @@ export default function CentralReproducao() {
             </div>
 
             {/* ── Ações Reprodutivas (Atalhos Rápidos) ── */}
-            <div className="grid grid-cols-2 gap-4 md:grid-cols-4 mb-8">
+            <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5 mb-8">
                 <button
                     onClick={() => navigate('/reproducao/novo-exame')}
-                    className="group flex flex-col items-center justify-center p-6 bg-white border border-gray-200 rounded-xl cursor-pointer transition-all duration-300 hover:bg-brand-blue hover:border-brand-blue hover:shadow-lg"
+                    className="group flex flex-col items-center justify-center p-4 bg-white border border-gray-200 rounded-xl cursor-pointer transition-all duration-300 hover:bg-brand-blue hover:border-brand-blue hover:shadow-lg"
                 >
-                    <Stethoscope className="w-8 h-8 mb-3 text-brand-blue group-hover:text-white transition-colors duration-300" />
-                    <span className="text-center font-semibold text-brand-blue group-hover:text-white transition-colors duration-300">Novo Exame</span>
+                    <Stethoscope className="w-6 h-6 mb-3 text-brand-blue group-hover:text-white transition-colors duration-300" />
+                    <span className="text-sm text-center font-semibold leading-tight text-brand-blue group-hover:text-white transition-colors duration-300">Novo Exame</span>
                 </button>
                 <button
                     onClick={() => navigate('/reproducao/nova-cobertura')}
-                    className="group flex flex-col items-center justify-center p-6 bg-white border border-gray-200 rounded-xl cursor-pointer transition-all duration-300 hover:bg-brand-blue hover:border-brand-blue hover:shadow-lg"
+                    className="group flex flex-col items-center justify-center p-4 bg-white border border-gray-200 rounded-xl cursor-pointer transition-all duration-300 hover:bg-brand-blue hover:border-brand-blue hover:shadow-lg"
                 >
-                    <Heart className="w-8 h-8 mb-3 text-brand-blue group-hover:text-white transition-colors duration-300" />
-                    <span className="text-center font-semibold text-brand-blue group-hover:text-white transition-colors duration-300">Nova Cobertura/IA</span>
+                    <Heart className="w-6 h-6 mb-3 text-brand-blue group-hover:text-white transition-colors duration-300" />
+                    <span className="text-sm text-center font-semibold leading-tight text-brand-blue group-hover:text-white transition-colors duration-300">Nova Cobertura/IA</span>
                 </button>
                 <button
                     onClick={() => navigate('/reproducao/diagnostico')}
-                    className="group flex flex-col items-center justify-center p-6 bg-white border border-gray-200 rounded-xl cursor-pointer transition-all duration-300 hover:bg-brand-blue hover:border-brand-blue hover:shadow-lg"
+                    className="group flex flex-col items-center justify-center p-4 bg-white border border-gray-200 rounded-xl cursor-pointer transition-all duration-300 hover:bg-brand-blue hover:border-brand-blue hover:shadow-lg"
                 >
-                    <Activity className="w-8 h-8 mb-3 text-brand-blue group-hover:text-white transition-colors duration-300" />
-                    <span className="text-center font-semibold text-brand-blue group-hover:text-white transition-colors duration-300">Diagnóstico de Gestação</span>
+                    <ClipboardCheck className="w-6 h-6 mb-3 text-brand-blue group-hover:text-white transition-colors duration-300" />
+                    <span className="text-sm text-center font-semibold leading-tight text-brand-blue group-hover:text-white transition-colors duration-300">Diagnóstico de Gestação</span>
+                </button>
+                <button
+                    onClick={() => navigate('/reproducao/checkup')}
+                    className="group flex flex-col items-center justify-center p-4 bg-white border border-gray-200 rounded-xl cursor-pointer transition-all duration-300 hover:bg-brand-blue hover:border-brand-blue hover:shadow-lg"
+                >
+                    <Activity className="w-6 h-6 mb-3 text-brand-blue group-hover:text-white transition-colors duration-300" />
+                    <span className="text-sm text-center font-semibold leading-tight text-brand-blue group-hover:text-white transition-colors duration-300">Check-up Gestacional</span>
                 </button>
                 <button
                     onClick={() => navigate('/reproducao/parto')}
-                    className="group flex flex-col items-center justify-center p-6 bg-white border border-gray-200 rounded-xl cursor-pointer transition-all duration-300 hover:bg-brand-blue hover:border-brand-blue hover:shadow-lg"
+                    className="group flex flex-col items-center justify-center p-4 bg-white border border-gray-200 rounded-xl cursor-pointer transition-all duration-300 hover:bg-brand-blue hover:border-brand-blue hover:shadow-lg"
                 >
-                    <Baby className="w-8 h-8 mb-3 text-brand-blue group-hover:text-white transition-colors duration-300" />
-                    <span className="text-center font-semibold text-brand-blue group-hover:text-white transition-colors duration-300">Registrar Parto</span>
+                    <Baby className="w-6 h-6 mb-3 text-brand-blue group-hover:text-white transition-colors duration-300" />
+                    <span className="text-sm text-center font-semibold leading-tight text-brand-blue group-hover:text-white transition-colors duration-300">Registrar Parto</span>
                 </button>
             </div>
 
