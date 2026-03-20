@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
-import LogoVitaEquus from '../assets/logo_vitaequus.png';
+import LogoVitaEquus from '../../assets/logo_vitaequus.png';
 
 export default function Login() {
     const [showPassword, setShowPassword] = useState(false);
