@@ -5,11 +5,28 @@ import LogoVitaEquus from '../../assets/logo_vitaequus.png';
 
 export default function Login() {
     const [showPassword, setShowPassword] = useState(false);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [errorMsg, setErrorMsg] = useState("");
     const navigate = useNavigate();
 
-    /** Simula autenticação e redireciona para o Dashboard */
+    /** Valida credenciais e redireciona para o Dashboard */
     const handleLogin = (e: React.FormEvent) => {
         e.preventDefault();
+        setErrorMsg("");
+
+        if (!email.includes("@")) {
+            setErrorMsg("Por favor, insira um e-mail válido.");
+            return;
+        }
+
+        if (password.trim() === "") {
+            setErrorMsg("A senha não pode estar vazia.");
+            return;
+        }
+
+        // Sucesso
+        localStorage.setItem("isAuthenticated", "true");
         navigate("/");
     };
 
@@ -27,9 +44,15 @@ export default function Login() {
                             Faça seu login
                         </h1>
                         <p className="text-sm text-neutral-500">
-                            Insira suas credenciais.
+                            Insira suas credenciais para acessar o sistema.
                         </p>
                     </div>
+
+                    {errorMsg && (
+                        <div className="rounded-lg bg-red-50 p-3 text-sm text-red-600 border border-red-200">
+                            {errorMsg}
+                        </div>
+                    )}
 
                     {/* Formulário */}
                     <form className="space-y-5" onSubmit={handleLogin}>
@@ -46,6 +69,8 @@ export default function Login() {
                                 type="email"
                                 placeholder="seu@email.com"
                                 autoComplete="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                                 className="block w-full rounded-lg border border-neutral-300 bg-neutral-50 px-4 py-2.5 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none transition focus:border-brand-green focus:ring-2 focus:ring-brand-green/30"
                             />
                         </div>
@@ -64,6 +89,8 @@ export default function Login() {
                                     type={showPassword ? "text" : "password"}
                                     placeholder="••••••••"
                                     autoComplete="current-password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
                                     className="block w-full rounded-lg border border-neutral-300 bg-neutral-50 px-4 py-2.5 pr-11 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none transition focus:border-brand-green focus:ring-2 focus:ring-brand-green/30"
                                 />
                                 <button

@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import MainLayout from "./components/Layout/MainLayout";
+import ProtectedRoute from "./components/Auth/ProtectedRoute";
 import Login from "./pages/Login/Login";
 import PerfilUsuario from "./pages/Perfil/PerfilUsuario";
 import Dashboard from "./pages/Dashboard/Dashboard";
@@ -33,31 +34,33 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/perfil" element={<PerfilUsuario />} />
 
-        <Route element={<MainLayout />}>
-          <Route index element={<Dashboard />} />
-          <Route path="/plantel" element={<Plantel />} />
-          <Route path="/reproducao" element={<CentralReproducao />} />
-          <Route path="/clinico" element={<ProntuariosClinicos />} />
-          <Route path="/clinico/novo" element={<NovoProntuario />} />
-          <Route path="/clinico/:id" element={<DetalhesProntuario />} />
-          <Route path="/farmacia" element={<EstoqueFarmacia />} />
-          <Route path="/farmacia/novo" element={<NovoInsumo />} />
-          <Route path="/cadastros" element={<CadastrosGerais />} />
-          <Route path="/cadastros/proprietario/novo" element={<NovoProprietario />} />
-          <Route path="/cadastros/proprietario/editar/:id" element={<EditarProprietario />} />
-          <Route path="/cadastros/propriedade/nova" element={<NovaPropriedade />} />
-          <Route path="/cadastros/propriedade/editar/:id" element={<EditarPropriedade />} />
-          <Route path="/cadastros/fornecedor/novo" element={<NovoFornecedor />} />
-          <Route path="/cadastros/fornecedor/editar/:id" element={<EditarFornecedor />} />
-          <Route path="/plantel/novo" element={<NovoAnimal />} />
+        <Route element={<ProtectedRoute />}>
+          <Route element={<MainLayout />}>
+            <Route index element={<Dashboard />} />
+            <Route path="/plantel" element={<Plantel />} />
+            <Route path="/reproducao" element={<CentralReproducao />} />
+            <Route path="/clinico" element={<ProntuariosClinicos />} />
+            <Route path="/clinico/novo" element={<NovoProntuario />} />
+            <Route path="/clinico/:id" element={<DetalhesProntuario />} />
+            <Route path="/farmacia" element={<EstoqueFarmacia />} />
+            <Route path="/farmacia/novo" element={<NovoInsumo />} />
+            <Route path="/cadastros" element={<CadastrosGerais />} />
+            <Route path="/cadastros/proprietario/novo" element={<NovoProprietario />} />
+            <Route path="/cadastros/proprietario/editar/:id" element={<EditarProprietario />} />
+            <Route path="/cadastros/propriedade/nova" element={<NovaPropriedade />} />
+            <Route path="/cadastros/propriedade/editar/:id" element={<EditarPropriedade />} />
+            <Route path="/cadastros/fornecedor/novo" element={<NovoFornecedor />} />
+            <Route path="/cadastros/fornecedor/editar/:id" element={<EditarFornecedor />} />
+            <Route path="/plantel/novo" element={<NovoAnimal />} />
 
-          <Route path="/plantel/:id" element={<PerfilAnimal />} />
-          <Route path="/plantel/editar/:id" element={<EditarAnimal />} />
-          <Route path="/reproducao/novo-exame" element={<NovoExameReprodutivo />} />
-          <Route path="/reproducao/nova-cobertura" element={<NovaCobertura />} />
-          <Route path="/reproducao/diagnostico" element={<DiagnosticoGestacao />} />
-          <Route path="/reproducao/checkup" element={<NovoCheckupGestacional />} />
-          <Route path="/reproducao/parto" element={<RegistroParto />} />
+            <Route path="/plantel/:id" element={<PerfilAnimal />} />
+            <Route path="/plantel/editar/:id" element={<EditarAnimal />} />
+            <Route path="/reproducao/novo-exame" element={<NovoExameReprodutivo />} />
+            <Route path="/reproducao/nova-cobertura" element={<NovaCobertura />} />
+            <Route path="/reproducao/diagnostico" element={<DiagnosticoGestacao />} />
+            <Route path="/reproducao/checkup" element={<NovoCheckupGestacional />} />
+            <Route path="/reproducao/parto" element={<RegistroParto />} />
+          </Route>
         </Route>
 
         <Route path="*" element={<Navigate to="/login" replace />} />
