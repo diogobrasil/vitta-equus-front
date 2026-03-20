@@ -1,73 +1,56 @@
-# React + TypeScript + Vite
+# 🐴 VitaEquus
+Sistema completo para Gestão Equina e Reprodução.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+O VitaEquus é uma aplicação web voltada para a gestão de propriedades, animais, controle reprodutivo avançado e histórico clínico de equinos. Desenvolvido com tecnologias modernas e focado na usabilidade, o sistema visa facilitar o dia a dia de veterinários, haras e criadores.
 
-Currently, two official plugins are available:
+## 🌟 Principais Funcionalidades
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Módulo de Propriedades**: Cadastro e gerenciamento de diferentes haras ou fazendas.
+- **Gestão de Animais**: Perfil completo de cada animal, cadastro de dados zootécnicos e acompanhamento geral.
+- **Módulo de Reprodução Avançada**:
+  - Exames reprodutivos.
+  - Registro e acompanhamento de Coberturas.
+  - Controle de Gestações e Checkups ultrassonográficos frequentes.
+  - Acompanhamento de Partos e registro automatizado de Potros.
+- **Módulo Clínico (Prontuário)**:
+  - Registro de Atendimentos veterinários (queixa, exame físico, diagnóstico e conduta).
+  - Prontuário médico detalhado para histórico contínuo do paciente.
+  - Controle e prescrição de Medicações.
 
-## React Compiler
+## 💻 Tech Stack & Arquitetura
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Este projeto foi construído utilizando as melhores ferramentas e práticas do ecossistema front-end:
 
-## Expanding the ESLint configuration
+- **Framework & Linguagem**: React 18 + Vite + TypeScript
+- **Estilização & Componentes UI**: Tailwind CSS + shadcn/ui (Componentes acessíveis e modulares baseados no Radix UI)
+- **Roteamento**: React Router v6
+- **Gerenciamento de Estado & Data Fetching**: React Query (@tanstack/react-query)
+- **Formulários & Validação**: React Hook Form + Zod
+- **Animações e Micro-interações**: Framer Motion
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🚀 Como executar o projeto localmente
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### 1. Pré-requisitos
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- **Node.js** instalado (versão 18+ recomendada)
+- **npm** (gerenciador de pacotes do Node)
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 2. Inicializando
+
+No seu terminal, navegue até a pasta do projeto e siga os passos abaixo:
+
+```bash
+# 1. Instale todas as dependências necessárias
+npm install
+
+# 2. Inicie o servidor de desenvolvimento
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 3. Acessando a Aplicação
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Abra o seu navegador e acesse a URL que aparecerá no terminal (por padrão: `http://localhost:8080`). O Vite possibilita Hot Module Replacement (HMR), então qualquer alteração no código refletirá instantaneamente na tela!
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
+
+*Desenvolvido para oferecer a mais alta performance e melhor experiência na gestão de haras e da clínica veterinária equina.*
